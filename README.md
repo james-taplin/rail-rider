@@ -24,3 +24,6 @@ Y raise/lower, U cock, left click fire. F8 debug spawn (rifle + targets), Shift+
 - Rack = native `GadgetWithSnapPoint` + `SnapPointGadget` (LongCylinder). DV's own snap code handles parenting and save/load of the rifle-on-rack link.
 - Cocked state is saved in the rifle's save data (`rrCocked`). Props and scatter are created with `BelongsToPlayer = false`, so they are never saved.
 - BB is a live projectile (gravity, drag, travel time), zeroed for 15 m.
+
+## Licence
+MIT, see `LICENSE`. Requires Custom Item Mod by Tostiman, which has its own licence and is not included here.
