@@ -10,7 +10,7 @@ The compiled DLL references the game's assemblies via `DVRoot` (default `B:\Stea
 
 ## Layout
 - `*.cs` - the mod. `Factories.cs` builds the items, `RifleController.cs` is the rifle state machine, `Ballistics.cs` the live BB, `Scatter.cs` the litter, `Props.cs` the cans and bottle.
-- `Models/` - shipped art: `rail_rider_rifle.glb`, `rail_rider_inventory.png`, `icons/`.
+- `Models/` - shipped art: `rail_rider_rifle.glb`, `rail_rider_rack.glb`, `rail_rider_inventory.png`, `icons/`.
 - `Audio/` - shipped sounds (16-bit mono WAV). Any can be replaced by the player.
 - `Model_Work/`, `Audio_Work/`, `Models/*.py` - Codex's Blender and audio source scripts for the shipped art and sounds.
 - `CODEX_*_BRIEF.md` - briefs given to Codex for the model and icons.

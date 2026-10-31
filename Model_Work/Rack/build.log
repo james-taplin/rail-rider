@@ -1,0 +1,57 @@
+C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Rack\build_rack.py:10: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True
+22:41:58 | INFO: Data are loaded, start creating Blender stuff
+22:41:58 | INFO: Blender create Mesh node Barrel - recessed muzzle
+22:41:58 | INFO: Blender create Mesh node Cylinder.006
+22:41:58 | INFO: Blender create Mesh node Buttplate
+22:41:58 | INFO: Blender create Mesh node Forearm
+22:41:58 | INFO: Blender create Mesh node Forearm retaining band
+22:41:58 | INFO: Blender create Mesh node Cube.009
+22:41:58 | INFO: Blender create Mesh node Front sight blade
+22:41:58 | INFO: Blender create Mesh node Lever
+22:41:58 | INFO: Blender create Mesh node Cylinder.008
+22:41:58 | INFO: Blender create Mesh node Cylinder.007
+22:41:58 | INFO: Blender create Mesh node Rear notch - open U
+22:41:58 | INFO: Blender create Mesh node Cube.008
+22:41:58 | INFO: Blender create Mesh node Receiver - stamped shell
+22:41:58 | INFO: Blender create Mesh node Cylinder.003
+22:41:58 | INFO: Blender create Mesh node Cylinder.004
+22:41:58 | INFO: Blender create Mesh node Cylinder.005
+22:41:58 | INFO: Blender create Mesh node Cylinder
+22:41:58 | INFO: Blender create Mesh node Cylinder.001
+22:41:58 | INFO: Blender create Mesh node Cylinder.002
+22:41:58 | INFO: Blender create Mesh node StockVisual
+22:41:58 | INFO: Blender create Mesh node Trigger
+22:41:58 | INFO: glTF import finished in 0.05s
+INFO Draco is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+22:41:58 | INFO: Starting glTF 2.0 export
+22:41:58 | INFO: Extracting primitive: Fore-end hook
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Sphere
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Sphere.001
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Fore-end lining
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Pine backing
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Stock hook
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Sphere.002
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Sphere.003
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Extracting primitive: Stock lining
+22:41:58 | INFO: Primitives created: 1
+22:41:58 | INFO: Finished glTF 2.0 export in 0.048484086990356445 s
+C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Rack\build_rack.py:108: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  s.world=bpy.data.worlds.new('Studio');s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs[0].default_value=(.21,.24,.25,1)
+00:03.610  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Rack\rack_loaded.png'
+00:05.828  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Rack\rack_empty.png'
+00:06.469  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Models\icons\icon_rack.png'
+
+RACK_VERIFIED 9
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

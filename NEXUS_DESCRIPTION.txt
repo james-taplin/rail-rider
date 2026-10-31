@@ -9,7 +9,7 @@ Rail-Rider adds a Red Ryder-style lever-action BB rifle to Derail Valley, along 
 [*][b]The Rail-Rider rifle[/b]: buy it in the shops. Pick it up, raise it to the iron sights, and cock the lever for every shot. Infinite ammo, no hip fire.
 [*][b]A real BB[/b]: a 4.5 mm steel BB with proper drag and gravity, zeroed for 15 m. It takes time to arrive, so you'll learn to lead and to allow for drop at longer range.
 [*][b]Things move when you hit them[/b]: light props such as mugs, mice, clipboards and cans get a proper shove. Locomotives, heavy items and scenery only stop the shot.
-[*][b]Rifle rack[/b]: a wooden rack you can place on cab surfaces. Hang your rifle on it and take it down again. Racked rifles are saved with your game.
+[*][b]Rifle rack[/b]: a pine rack with two steel hooks you can place on cab surfaces. Hang your rifle on it and take it down again. Racked rifles are saved with your game.
 [*][b]Cans and bottles[/b]: six plain cans and one green glass bottle that shatters. They aren't sold; you'll find them lying around near stations and by the bins and skips. Anything you leave alone tidies itself away once you've moved on.
 [*][b]Sound and feel[/b]: a cocking stroke, recoil, impact effects, and a metallic rattle if you shake or turn the rifle quickly or knock it. Sounds are synthesised, and you can replace any of them with your own WAV files.
 [/list]
@@ -55,6 +55,7 @@ This is a beta, so please tell me what you find. Still to be proven outside my o
 [size=4][b]Changelog[/b][/size]
 [b]0.2.0[/b]
 [list]
+[*]new pine rifle rack with steel hooks and leather linings
 [*]new rifle model with a carved stock logo and receiver stamp, plus new inventory icons
 [*]sampled sounds for cocking, firing, shaking and impacts, with different sounds for cans, glass, locomotives, brick and ground
 [*]cans and bottles now turn up as litter near stations instead of being sold, and are never written to your save

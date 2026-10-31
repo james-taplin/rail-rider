@@ -4,6 +4,7 @@ A lever-action BB rifle for plinking, plus a cab rifle rack, six generic cans an
 Beta: expect rough edges. Hand-built props and no hand model. Includes the adult rifle model and 40 firing, cocking, shake and impact sound clips.
 
 WHAT IS NEW IN 0.2.0
+- New rack model: pine backing board with two steel hooks and leather linings. The rifle hangs muzzle-left with the carved stock side facing the cab.
 - New rifle model and engraving (relief-lit wood, lever-action detail), new inventory art and icons for the rack, cans and bottle.
 - Sampled sounds: cock, shot, shake rattles, and impact sounds that depend on what you hit (can, glass, locomotive, brick, ground, other).
 - Cans and bottles are now litter near stations (not sold), can be binned in skips, and are never saved.

@@ -217,9 +217,13 @@ namespace RailRider
 
             // Gadget local frame: wall contact plane at z=0, body toward -Z, rifle lies along X.
             var gadget = Placeholders.Empty(root.transform, "RackGadget", Vector3.zero);
-            Placeholders.Cube(gadget, "Plate", new Vector3(0, 0, -0.005f), new Vector3(0.70f, 0.10f, 0.01f), wood);
-            Placeholders.Cube(gadget, "HookL", new Vector3(-0.25f, 0.015f, -0.03f), new Vector3(0.03f, 0.05f, 0.04f), wood);
-            Placeholders.Cube(gadget, "HookR", new Vector3(0.25f, 0.015f, -0.03f), new Vector3(0.03f, 0.05f, 0.04f), wood);
+            string rackPath = System.IO.Path.Combine(Main.Mod.Path, "Models", "rail_rider_rack.glb");
+            if (!GltfLoader.TryLoad(rackPath, gadget))
+            {
+                Placeholders.Cube(gadget, "Plate", new Vector3(0, 0, -0.005f), new Vector3(0.70f, 0.10f, 0.01f), wood);
+                Placeholders.Cube(gadget, "HookL", new Vector3(-0.25f, 0.015f, -0.03f), new Vector3(0.03f, 0.05f, 0.04f), wood);
+                Placeholders.Cube(gadget, "HookR", new Vector3(0.25f, 0.015f, -0.03f), new Vector3(0.03f, 0.05f, 0.04f), wood);
+            }
 
             var proxy = gadget.gameObject.AddComponent<RackProxy>();
             proxy.boundsCenter = new Vector3(0, 0, -0.06f);
@@ -252,11 +256,11 @@ namespace RailRider
             var gws = target as GadgetWithSnapPoint;
             if (gws == null) { Main.Warn("rack target is not GadgetWithSnapPoint"); return; }
 
-            // Rifle lies along gadget +X, resting in the hooks: snap target is rotated so rifle +Z -> gadget +X.
+            // Muzzle along gadget -X presents the carved stock face to the cab.
             var snapGo = new GameObject("RackSnap");
             snapGo.transform.SetParent(gws.transform, false);
-            snapGo.transform.localPosition = new Vector3(0, 0.045f, -0.03f);
-            snapGo.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            snapGo.transform.localPosition = new Vector3(-0.0675f, 0.045f, -0.048f);
+            snapGo.transform.localRotation = Quaternion.Euler(0, -90, 0);
             snapGo.layer = gws.gameObject.layer;
 
             var col = snapGo.AddComponent<BoxCollider>();
