@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>RailRider</AssemblyName>
+    <Version>0.2.0</Version>
+    <DVRoot Condition="'$(DVRoot)' == ''">B:\SteamLibrary\steamapps\common\Derail Valley</DVRoot>
+    <Managed>$(DVRoot)\DerailValley_Data\Managed</Managed>
+    <Mods>$(DVRoot)\Mods</Mods>
+    <NoWarn>CS0649;CS0169;CS0414</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Model_Work\**\*.cs" />
+    <Reference Include="Assembly-CSharp"><HintPath>$(Managed)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.CabControls.Spec"><HintPath>$(Managed)\DV.CabControls.Spec.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.Interaction"><HintPath>$(Managed)\DV.Interaction.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.Utils"><HintPath>$(Managed)\DV.Utils.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.Common"><HintPath>$(Managed)\DV.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="WorldStreamer"><HintPath>$(Managed)\WorldStreamer.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.Inventory"><HintPath>$(Managed)\DV.Inventory.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.UIFramework"><HintPath>$(Managed)\DV.UIFramework.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DV.UI"><HintPath>$(Managed)\DV.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Newtonsoft.Json"><HintPath>$(Managed)\Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(Managed)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(Managed)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(Managed)\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule"><HintPath>$(Managed)\UnityEngine.ParticleSystemModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AudioModule"><HintPath>$(Managed)\UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(Managed)\UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(Managed)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(Managed)\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(Managed)\UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityModManager"><HintPath>$(Managed)\UnityModManager\UnityModManager.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(Managed)\UnityModManager\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="custom_item_mod"><HintPath>$(Mods)\custom_item_mod\custom_item_mod.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="custom_item_components"><HintPath>$(Mods)\custom_item_mod\custom_item_components.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

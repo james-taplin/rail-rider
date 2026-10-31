@@ -1,0 +1,53 @@
+[size=5][b]Rail-Rider[/b][/size]
+[i]A lever-action BB rifle for the quiet moments between jobs.[/i]
+
+[size=4][b]Short intro[/b][/size]
+Rail-Rider adds a Red Ryder-style lever-action BB rifle to Derail Valley, along with a rifle rack for your cab and a handful of empty cans and bottles to aim at. It's plinking in the old-fashioned sense: raise the rifle, line up the sights, work the lever, and tap a can off a fence post. Waiting for a job to finish or a train to crawl into the station is a perfectly good time for it.
+
+[size=4][b]What you get[/b][/size]
+[list]
+[*][b]The Rail-Rider rifle[/b]: buy it in the shops. Pick it up, raise it to the iron sights, and cock the lever for every shot. Infinite ammo, no hip fire.
+[*][b]A real BB[/b]: a 4.5 mm steel BB with proper drag and gravity, zeroed for 15 m. It takes time to arrive, so you'll learn to lead and to allow for drop at longer range.
+[*][b]Things move when you hit them[/b]: light props such as mugs, mice, clipboards and cans get a proper shove. Locomotives, heavy items and scenery only stop the shot.
+[*][b]Rifle rack[/b]: a wooden rack you can place on cab surfaces. Hang your rifle on it and take it down again. Racked rifles are saved with your game.
+[*][b]Cans and bottles[/b]: six plain cans and one green glass bottle that shatters. They aren't sold; you'll find them lying around near stations and by the bins and skips. Anything you leave alone tidies itself away once you've moved on.
+[*][b]Sound and feel[/b]: a cocking stroke, recoil, impact effects, and a metallic rattle if you shake or turn the rifle quickly or knock it. Sounds are synthesised, and you can replace any of them with your own WAV files.
+[/list]
+
+[size=4][b]Controls[/b][/size]
+All keys can be changed in the mod's panel (Ctrl+F10).
+[list]
+[*][b]Y[/b]: raise or lower the rifle to the sights
+[*][b]U[/b]: cock the lever (one stroke per shot; from the sights it lowers, cocks, and raises again)
+[*][b]Left click[/b] while raised and cocked: fire. Uncocked gives a dry click.
+[*][b]Rack[/b]: place it like any other cab gadget. With the rifle held and lowered, click the rack to hang it; grab the rifle to take it off.
+[*][b]F8[/b]: debug spawn of a rifle and a target line-up. [b]Shift+F8[/b]: a rack. [b]F7[/b]: one of every can and a bottle. These can be switched off in the panel.
+[/list]
+
+[size=4][b]Installation[/b][/size]
+[b]Requirements:[/b]
+[list]
+[*][url=https://www.nexusmods.com/derailvalley/mods/]Unity Mod Manager[/url]
+[*]Custom Item Mod 0.2.0 by Tostiman (id: custom_item_mod)
+[/list]
+[b]Steps:[/b]
+[list=1]
+[*]Install Unity Mod Manager and Custom Item Mod if you don't have them.
+[*]Drag the Rail-Rider zip into Unity Mod Manager, or unzip the [i]RailRider[/i] folder into [i]<Derail Valley>\Mods[/i].
+[*]Start the game. The rifle and rack appear in the normal shops.
+[/list]
+To uninstall, remove the RailRider folder from Mods. Loose cans and bottles are never saved, so nothing is left behind in your save. A rifle or rack you own is simply dropped from it.
+
+[size=4][b]Keeping your world tidy[/b][/size]
+The mod panel has a [b]Scatter[/b] toggle for the cans and bottles, and a [b]Clear all loose Rail-Rider items[/b] button. The button removes every loose rifle, rack, can and bottle in the world. Racks that are attached, rifles hanging on racks, items you're holding and anything in your inventory are left alone. Cans and bottles can also be thrown in a dumpster like any other junk.
+
+[size=4][b]Beta notes[/b][/size]
+This is a beta, so please tell me what you find. Still to be proven outside my own test saves: rack placement, saving and loading a racked rifle, where the litter turns up, and how the sights sit at other resolutions and fields of view. If something goes wrong, tick "Verbose log" in the mod panel and send me your Player.log.
+
+[size=4][b]Credits[/b][/size]
+[list]
+[*]Code, game integration and testing: James, with Claude
+[*]Rifle model, textures and inventory art: Codex
+[*]Item framework: [b]Custom Item Mod[/b] by Tostiman
+[*]Unity Mod Manager and Harmony, for making this sort of thing possible
+[/list]

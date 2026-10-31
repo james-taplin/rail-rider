@@ -1,0 +1,60 @@
+{
+  "triangles": 22680,
+  "materials": 7,
+  "meshes": 21,
+  "bounds_metres": [
+    [
+      -0.017999999225139618,
+      0.017999999225139618
+    ],
+    [
+      -0.12736718356609344,
+      0.04600000008940697
+    ],
+    [
+      -0.4490000009536743,
+      0.48399999737739563
+    ]
+  ],
+  "overall_length_metres": 0.93299999833107,
+  "buttplate_fit_max_gap_metres": 0.0,
+  "required_nodes": {
+    "Lever": [
+      0,
+      -0.02199999988079071,
+      -0.041999999433755875
+    ],
+    "RearSight": [
+      0,
+      0.042500000447034836,
+      -0.0560000017285347
+    ],
+    "FrontSight": [
+      0,
+      0.042500000447034836,
+      0.4519999921321869
+    ],
+    "Muzzle": [
+      0,
+      0.023000000044703484,
+      0.48399999737739563
+    ],
+    "Chamber": [
+      0,
+      0.023000000044703484,
+      0.10000000149011612
+    ],
+    "RackDock": [
+      0,
+      0,
+      0.04500000178813934
+    ]
+  },
+  "stock_tangents": true,
+  "embedded_normal_map": true,
+  "single_primitive_meshes": true,
+  "flat_hierarchy": true,
+  "sweep_samples": 71,
+  "sweep_interval_degrees": 1,
+  "sweep_overlaps": 0
+}

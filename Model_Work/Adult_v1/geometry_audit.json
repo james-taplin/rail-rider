@@ -1,0 +1,416 @@
+{
+  "meshes": [
+    {
+      "name": "StockVisual",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 0.0007563540580591359
+    },
+    {
+      "name": "Buttplate",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 1.063102321146577e-05
+    },
+    {
+      "name": "Receiver - stamped shell",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 0.0002229185203960908
+    },
+    {
+      "name": "Receiver screw -1 0",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 5.472303825928955e-08
+    },
+    {
+      "name": "Receiver screw -1 1",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 4.0832641795758596e-08
+    },
+    {
+      "name": "Receiver screw -1 2",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 2.4794709313974617e-08
+    },
+    {
+      "name": "Receiver screw 1 0",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 5.472303830097183e-08
+    },
+    {
+      "name": "Receiver screw 1 1",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 4.083264183525508e-08
+    },
+    {
+      "name": "Receiver screw 1 2",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 2.4794709429767135e-08
+    },
+    {
+      "name": "Barrel - recessed muzzle",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 8.366135287898668e-05
+    },
+    {
+      "name": "BB reserve tube",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 7.979076049547402e-05
+    },
+    {
+      "name": "Forearm",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 0.00019349608534964533
+    },
+    {
+      "name": "Forearm retaining band",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 1.1641340141596561e-06
+    },
+    {
+      "name": "Lever",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 9.051559148623126e-06
+    },
+    {
+      "name": "Lever pivot pin -1",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 5.582287333739622e-08
+    },
+    {
+      "name": "Lever pivot pin 1",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 5.582287333739622e-08
+    },
+    {
+      "name": "Trigger",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 6.715285397155628e-07
+    },
+    {
+      "name": "Rear sight spring",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 1.3200939165487596e-06
+    },
+    {
+      "name": "Rear notch - open U",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 2.7440001274346614e-07
+    },
+    {
+      "name": "Front sight base",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 4.940316692869666e-07
+    },
+    {
+      "name": "Front sight blade",
+      "nonmanifold": 0,
+      "winding_edges": 0,
+      "volume": 1.5120029814763003e-07
+    }
+  ],
+  "sweep": [
+    {
+      "degrees": 0,
+      "overlap": []
+    },
+    {
+      "degrees": 1,
+      "overlap": []
+    },
+    {
+      "degrees": 2,
+      "overlap": []
+    },
+    {
+      "degrees": 3,
+      "overlap": []
+    },
+    {
+      "degrees": 4,
+      "overlap": []
+    },
+    {
+      "degrees": 5,
+      "overlap": []
+    },
+    {
+      "degrees": 6,
+      "overlap": []
+    },
+    {
+      "degrees": 7,
+      "overlap": []
+    },
+    {
+      "degrees": 8,
+      "overlap": []
+    },
+    {
+      "degrees": 9,
+      "overlap": []
+    },
+    {
+      "degrees": 10,
+      "overlap": []
+    },
+    {
+      "degrees": 11,
+      "overlap": []
+    },
+    {
+      "degrees": 12,
+      "overlap": []
+    },
+    {
+      "degrees": 13,
+      "overlap": []
+    },
+    {
+      "degrees": 14,
+      "overlap": []
+    },
+    {
+      "degrees": 15,
+      "overlap": []
+    },
+    {
+      "degrees": 16,
+      "overlap": []
+    },
+    {
+      "degrees": 17,
+      "overlap": []
+    },
+    {
+      "degrees": 18,
+      "overlap": []
+    },
+    {
+      "degrees": 19,
+      "overlap": []
+    },
+    {
+      "degrees": 20,
+      "overlap": []
+    },
+    {
+      "degrees": 21,
+      "overlap": []
+    },
+    {
+      "degrees": 22,
+      "overlap": []
+    },
+    {
+      "degrees": 23,
+      "overlap": []
+    },
+    {
+      "degrees": 24,
+      "overlap": []
+    },
+    {
+      "degrees": 25,
+      "overlap": []
+    },
+    {
+      "degrees": 26,
+      "overlap": []
+    },
+    {
+      "degrees": 27,
+      "overlap": []
+    },
+    {
+      "degrees": 28,
+      "overlap": []
+    },
+    {
+      "degrees": 29,
+      "overlap": []
+    },
+    {
+      "degrees": 30,
+      "overlap": []
+    },
+    {
+      "degrees": 31,
+      "overlap": []
+    },
+    {
+      "degrees": 32,
+      "overlap": []
+    },
+    {
+      "degrees": 33,
+      "overlap": []
+    },
+    {
+      "degrees": 34,
+      "overlap": []
+    },
+    {
+      "degrees": 35,
+      "overlap": []
+    },
+    {
+      "degrees": 36,
+      "overlap": []
+    },
+    {
+      "degrees": 37,
+      "overlap": []
+    },
+    {
+      "degrees": 38,
+      "overlap": []
+    },
+    {
+      "degrees": 39,
+      "overlap": []
+    },
+    {
+      "degrees": 40,
+      "overlap": []
+    },
+    {
+      "degrees": 41,
+      "overlap": []
+    },
+    {
+      "degrees": 42,
+      "overlap": []
+    },
+    {
+      "degrees": 43,
+      "overlap": []
+    },
+    {
+      "degrees": 44,
+      "overlap": []
+    },
+    {
+      "degrees": 45,
+      "overlap": []
+    },
+    {
+      "degrees": 46,
+      "overlap": []
+    },
+    {
+      "degrees": 47,
+      "overlap": []
+    },
+    {
+      "degrees": 48,
+      "overlap": []
+    },
+    {
+      "degrees": 49,
+      "overlap": []
+    },
+    {
+      "degrees": 50,
+      "overlap": []
+    },
+    {
+      "degrees": 51,
+      "overlap": []
+    },
+    {
+      "degrees": 52,
+      "overlap": []
+    },
+    {
+      "degrees": 53,
+      "overlap": []
+    },
+    {
+      "degrees": 54,
+      "overlap": []
+    },
+    {
+      "degrees": 55,
+      "overlap": []
+    },
+    {
+      "degrees": 56,
+      "overlap": []
+    },
+    {
+      "degrees": 57,
+      "overlap": []
+    },
+    {
+      "degrees": 58,
+      "overlap": []
+    },
+    {
+      "degrees": 59,
+      "overlap": []
+    },
+    {
+      "degrees": 60,
+      "overlap": []
+    },
+    {
+      "degrees": 61,
+      "overlap": []
+    },
+    {
+      "degrees": 62,
+      "overlap": []
+    },
+    {
+      "degrees": 63,
+      "overlap": []
+    },
+    {
+      "degrees": 64,
+      "overlap": []
+    },
+    {
+      "degrees": 65,
+      "overlap": []
+    },
+    {
+      "degrees": 66,
+      "overlap": []
+    },
+    {
+      "degrees": 67,
+      "overlap": []
+    },
+    {
+      "degrees": 68,
+      "overlap": []
+    },
+    {
+      "degrees": 69,
+      "overlap": []
+    },
+    {
+      "degrees": 70,
+      "overlap": []
+    }
+  ]
+}

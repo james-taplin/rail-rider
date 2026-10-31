@@ -1,0 +1,70 @@
+C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\build_adult.py:65: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name); m.diffuse_color=(*color,1); m.use_nodes=True
+LOGO_ALPHA 0.0 1.0 bounds (409, 2076) placed 1024 202
+SWEEP_HITS []
+INFO Draco is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+21:46:53 | INFO: Starting glTF 2.0 export
+21:46:53 | INFO: Extracting primitive: Barrel - recessed muzzle
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.006
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Buttplate
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Forearm
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Forearm retaining band
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cube.009
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Front sight blade
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Lever
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.008
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.007
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Rear notch - open U
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cube.008
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Receiver - stamped shell
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.003
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.004
+21:46:53 | INFO: Primitives created: 1
+21:46:53 | INFO: Extracting primitive: Cylinder.005
+21:46:53 | INFO: Primitives created: 1
+21:46:54 | INFO: Extracting primitive: Cylinder
+21:46:54 | INFO: Primitives created: 1
+21:46:54 | INFO: Extracting primitive: Cylinder.001
+21:46:54 | INFO: Primitives created: 1
+21:46:54 | INFO: Extracting primitive: Cylinder.002
+21:46:54 | INFO: Primitives created: 1
+21:46:54 | INFO: Extracting primitive: StockVisual
+21:46:54 | INFO: Primitives created: 1
+21:46:54 | INFO: Extracting primitive: Trigger
+21:46:54 | INFO: Primitives created: 1
+21:46:54 | INFO: Finished glTF 2.0 export in 0.09355926513671875 s
+C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\build_adult.py:320: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world=scene.world;world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.085,.10,1);world.node_tree.nodes['Background'].inputs[1].default_value=.55
+00:09.484  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\01_shooter_side.png'
+00:17.797  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\02_stock_relief.png'
+00:24.844  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\03_receiver.png'
+00:34.469  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\17_receiver_stamp.png'
+00:41.312  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\14_lever_reference_side.png'
+00:47.109  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\15_dads_shooter_side.png'
+00:53.234  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\16_dads_other_side.png'
+00:57.859  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\04_sight_view.png'
+01:02.047  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\05_lever_open.png'
+01:06.391  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1\renders\06_plain_side.png'
+01:06.391  reports          | WARNING Path 'B:\SteamLibrary\steamapps\common\Blender\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Dots Stroke'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+01:06.391  reports          | WARNING Path 'B:\SteamLibrary\steamapps\common\Blender\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Material'
+
+Info: Saved as "rail_rider_adult.blend"
+ADULT_BUILD_COMPLETE C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Adult_v1
+
+Blender quit

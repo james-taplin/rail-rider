@@ -1,0 +1,40 @@
+Rail-Rider model handover
+
+File: rail_rider_rifle.glb (glTF 2.0, wood texture embedded). Coordinates in metres: +Y up, muzzle +Z, right +X; origin at receiver centre.
+
+Required nodes (glTF coordinates):
+Lever: mesh, pivot (0, -0.034, 0.076); rotate local X from 0 to -70 degrees to open.
+RearSight: empty, (0, 0.0525, -0.0615), centre of U-notch opening.
+FrontSight: empty, (0, 0.0525, 0.446), front blade tip.
+Muzzle: empty, (0, 0.022, 0.490), bore centre.
+Chamber: empty, (0, 0.022, 0.100), bore centre.
+RackDock: empty, (0, 0, 0.045), axes aligned with model; approximate balance point.
+
+9,864 triangles, two PBR materials, one UV set, 1024 px embedded base-colour wood texture. Stock engraving on left side only. The underbarrel BB reserve tube is a cosmetic mesh; no gameplay function. Source scripts are included for revision.
+
+Validation: Blender render previews included for left side, sight view and -70-degree lever. A Blender triangle-overlap check sampled the lever every 5 degrees from 0 through -70 and detected no intersection with fixed meshes. This is sampled geometry validation, not continuous collision proof or an in-game player-view test. The sight preview camera is 14 cm behind the rear marker, on the shared sight line.
+
+Deviations / integration notes:
+- Overall length approximately 0.955 m, with approximately 0.40 m of barrel ahead of the receiver, following the request for a longer barrel; this exceeds the original 0.90 m / 0.28 m estimates.
+- The underbarrel reserve tube was added at the user's later request, superseding the original no-magazine-tube brief.
+- There are no normal or ORM texture maps; the wood uses an embedded base-colour texture and the metal uses material factors.
+- The loop opens about local negative X. Confirm the runtime rotation sign after the loader's coordinate conversion.
+- RackDock is an estimated balance point, not a physically calculated centre of mass. In-game appearance, rack positioning and player-view clearance remain untested.
+
+Update 31 October - model / loader handover
+
+The stock shape has been adjusted toward the supplied modern Red Ryder photo and the Rail Rider art moved around onto the side rather than the top. The new stock mesh is named StockVisual. It deliberately does not trigger GltfLoader's existing special UV adjustment for a mesh named Stock. The art is on GLB +X, so the current loader's X mirror puts it on Unity -X (the visible side identified in the existing loader). This is an explicit deviation from the original GLB -X art convention. If the loader's X conversion changes, revisit the side and orientation instead of applying the old Stock UV shift.
+
+See-through appearance: Not verified fixed in game. After welding export seams, Blender inspection finds the stock, receiver, forearm and buttplate closed with consistently oriented edges and positive signed volume. The barrel is deliberately open at its inner end and bore. The game loader mirrors X and then reverses each triangle's indices. Hypothesis to test in Unity: under the current glTF-to-Unity conversion the reflection already changes glTF CCW winding to Unity's clockwise front face, so the additional index reversal may make the exterior back-facing. Compare the current loader against keeping the original index order while retaining the X mirror; check actual game rendering, normals, sights and lever, and revert if that hypothesis is not borne out. Unity's front-face winding convention and glTF's front-face convention should be verified for the actual renderer. Do not reverse the asset's outward faces merely to hide this potential loader issue.
+
+The source GLB remains 9,864 triangles, with unchanged required markers and lever pivot. Blender BVH overlap checks at 5-degree steps detected no lever contact with other meshes from 0 to -70 degrees after the stock change. The new side preview shows GLB +X, corresponding to Unity -X after the current loader mirror; rail_rider_stock_player_view.png is an approximate near-side perspective, not an in-game screenshot. In-game appearance, culling and logo orientation remain unverified until Claude builds and tests the updated model. The shape is based on the available reference photo, not a measured or exact scan of a Red Ryder.
+
+Update 31 October - receiver junction and engraving alignment
+
+Extended the barrel and cosmetic reserve tube into the receiver, and tapered the rear of the forearm into the receiver to remove the visible break at the junction. The engraving UV is angled with the stock slope and remains on GLB +X for the current Unity X-mirroring loader. Preview: rail_rider_receiver_join.png; rail_rider_left.png. The current export has 9,992 triangles and the same named gameplay nodes and positions. The lever cleared fixed meshes in the Blender overlap check at 5-degree intervals from 0 to -70 degrees. This is not an in-game test. The preceding loader / see-through investigation remains unverified and still needs Claude's game-side test.
+
+Update 31 October - inventory artwork and barrel / reserve tube
+
+rail_rider_inventory.png is a 512x512 RGBA transparent render of the actual closed-lever model for the game's existing inventory tile. It is an asset only: integration code is unchanged and must load/use the PNG.
+
+The barrel and cosmetic reserve tube now both have 0.008 m outside radius (16 mm diameter). The barrel's concealed rear and the inner bore end are capped; the muzzle remains visibly open. In a Blender audit after welding export seams, both barrel and reserve tube had zero boundary/non-manifold edges and consistently oriented shared edges. That establishes closed model geometry; it does not prove correct rendering through the game loader. The earlier potential loader winding/backface-culling issue remains unverified in game. New export: 10,116 triangles, two materials; gameplay marker positions unchanged. Lever sweep sampled every 5 degrees through -70 degrees found no mesh overlaps. New receiver close-up: rail_rider_receiver_join.png.

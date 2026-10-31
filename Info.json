@@ -1,0 +1,11 @@
+{
+  "Id": "RailRider",
+  "DisplayName": "Rail-Rider Plinking Rifle",
+  "Author": "James / Claude",
+  "Version": "0.2.0",
+  "ManagerVersion": "0.27.3",
+  "AssemblyName": "RailRider.dll",
+  "EntryMethod": "RailRider.Main.Load",
+  "Requirements": ["custom_item_mod"],
+  "LoadAfter": ["custom_item_mod"]
+}

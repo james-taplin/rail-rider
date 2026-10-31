@@ -1,0 +1,7 @@
+Rail-Rider inventory icon notes
+
+Eight 512 x 512 RGBA PNGs: icon_rack.png; icon_can_red.png, icon_can_green.png, icon_can_orange.png, icon_can_blue.png, icon_can_silver.png, icon_can_black.png; icon_bottle_green.png.
+
+build_icons.py creates the models and renders the icons in Blender. Transparent background, unbranded cans, common can geometry and camera, no missing-item versions. PNGs use straight alpha. Bottle uses transparent-glass rendering, so the background partially shows through. Glass tint is approximate when composited as a single PNG; it is not real-time refraction. The rack fills the frame width rather than its height because the requested plate is long and narrow.
+
+Colours and dimensions follow the brief; studio lighting and tone mapping change their displayed appearance. Rendered and visually checked on a grey background; exact appearance in the game UI remains untested. C# and the rifle model were not modified.

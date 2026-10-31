@@ -1,0 +1,6 @@
+Editor=6000.6.2f1
+Shader=Standard
+NormalMap=True
+NormalKeyword=True
+StockTangents=2428
+MeshCount=21

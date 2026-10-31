@@ -1,0 +1,16 @@
+bin/
+obj/
+build_out/
+*.zip
+*.blend1
+__pycache__/
+# reference material and heavy previews (not shipped, some is third-party photography)
+Models/Research_Red_Ryder/
+Models/Preview_*/
+Model_Work/**/UnityRenderCheck/
+Model_Work/**/frames/
+Model_Work/**/renders/
+Model_Work/**/*.mp4
+Model_Work/**/*.gif
+Audio_Work/Audition/*.wav
+Model_Work/**/rail_rider_adult_preview.glb
