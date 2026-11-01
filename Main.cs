@@ -76,6 +76,7 @@ namespace RailRider
             {
                 ItemModsFinder.CustomItems.Add(RifleFactory.Build());
                 ItemModsFinder.CustomItems.Add(RackFactory.Build());
+                ItemModsFinder.CustomItems.Add(GalleryFactory.Build());
                 foreach (var p in PropFactory.Build()) ItemModsFinder.CustomItems.Add(p);
             }
             catch (Exception ex) { Mod.Logger.LogException("RailRider item injection failed", ex); }

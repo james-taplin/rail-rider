@@ -1,9 +1,12 @@
-Rail-Rider plinking rifle - 0.2.1 BETA (UMM)
+Rail-Rider plinking rifle - 0.3.0 BETA (UMM)
 
 A lever-action BB rifle for plinking, plus a cab rifle rack, six generic cans and a breakable green glass bottle.
 Beta: expect rough edges. Hand-built props and no hand model. Includes the adult rifle model and 40 firing, cocking, shake and impact sound clips.
 
-WHAT IS NEW IN 0.2.1
+WHAT IS NEW IN 0.3.0
+- New shop item: the Rail-Rider Rat Gallery. Four steel rats and a round reset disc in a steel housing. Shoot a rat and it drops and stays down; shoot the disc and every fallen rat stands back up. Sold in the shops alongside the rifle and rack. Ctrl+F8 (debug) puts one on the floor in front of you.
+
+WHAT WAS NEW IN 0.2.1
 - Hold Shift while aiming for a subtle zoom (half of the normal right-click zoom). The camera near plane is pulled in while aiming so the rifle no longer clips.
 - An empty rack can be taken off the wall again (it stays fixed while it holds a rifle).
 - Rear sight is now level with the front blade and sits flush on the receiver.
@@ -22,7 +25,7 @@ REQUIRES
 
 INSTALL
 Drop the zip into Unity Mod Manager (or unzip the RailRider folder into <Derail Valley>\Mods). Start the game.
-The rifle and the rifle rack are sold in the normal shops. The six cans and the green glass bottle are NOT sold: they turn up as litter on the ground and around bins near stations (and you can bin them in a dumpster like any other junk).
+The rifle, the rifle rack and the rat gallery are sold in the normal shops. The six cans and the green glass bottle are NOT sold: they turn up as litter on the ground and around bins near stations (and you can bin them in a dumpster like any other junk).
 
 CONTROLS (rebindable in the mod's UMM panel; defaults are guesses that may clash with your bindings)
 - Pick the rifle up as normal.
@@ -32,7 +35,7 @@ CONTROLS (rebindable in the mod's UMM panel; defaults are guesses that may clash
 - Left click while raised and cocked: fire. Raised but uncocked gives a dry click.
 - Shake / turn your view quickly and the rifle rattles. Drop or knock it and it rattles.
 - Rack: place it on a cab surface with the normal gadget placement; with the rifle held and lowered, click the rack to hang it. Take it out by grabbing it.
-- Debug spawn (can be switched off in the panel): F8 rifle at your feet plus a plinking line-up (6 random cans and 2 bottles) in front of you, Shift+F8 rack, F7 one of every can and a bottle in a row.
+- Debug spawn (can be switched off in the panel): F8 rifle at your feet plus a plinking line-up (6 random cans and 2 bottles) in front of you, Shift+F8 rack, Ctrl+F8 rat gallery, F7 one of every can and a bottle in a row.
 
 SAVES / CLEAN-UP
 - Litter cans and bottles are never written to your save and are removed again when you walk away from them (unless you moved or shot them).

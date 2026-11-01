@@ -16,6 +16,9 @@ namespace RailRider
     {
         static Material baseMat;
 
+        /// <summary>Animation clips of the most recent successful TryLoad (null when the file has none). Targets are node names.</summary>
+        public static List<GltfClip> LastClips;
+
         static Material NewMat(JToken m, Texture2D tex, Texture2D normalTex)
         {
             if (baseMat == null)
@@ -50,6 +53,7 @@ namespace RailRider
         {
             try
             {
+                LastClips = null;
                 if (!File.Exists(path)) return false;
                 byte[] d = File.ReadAllBytes(path);
                 int jl = BitConverter.ToInt32(d, 12);
@@ -108,10 +112,14 @@ namespace RailRider
                 foreach (var nd in (JArray)j["nodes"])
                     if ((string)nd["name"] == "FrontSight" && nd["translation"] is JArray ft) frontY = (float)ft[1];
 
-                foreach (var node in (JArray)j["nodes"])
+                var nodeArr = (JArray)j["nodes"];
+                var gos = new GameObject[nodeArr.Count];
+                for (int ni = 0; ni < nodeArr.Count; ni++)
                 {
+                    var node = nodeArr[ni];
                     string name = (string)node["name"];
                     var go = new GameObject(name);
+                    gos[ni] = go;
                     go.transform.SetParent(parent, false);
                     if (node["translation"] is JArray t)
                         go.transform.localPosition = new Vector3(-(float)t[0], (float)t[1], (float)t[2]);
@@ -182,9 +190,57 @@ namespace RailRider
                     go.AddComponent<MeshFilter>().sharedMesh = mesh;
                     go.AddComponent<MeshRenderer>().sharedMaterial = Mat((int?)prim["material"] ?? 0);
                 }
+                // Hierarchy (flat files have none): children keep their local transform under their parent node.
+                for (int ni = 0; ni < nodeArr.Count; ni++)
+                    if (nodeArr[ni]["children"] is JArray kids)
+                        foreach (var k in kids) gos[(int)k].transform.SetParent(gos[ni].transform, false);
+                LastClips = ParseClips(j, d, bin);
                 return true;
             }
             catch (Exception e) { Main.Warn("glTF load failed: " + e); return false; }
+        }
+
+        static List<GltfClip> ParseClips(JObject j, byte[] d, int bin)
+        {
+            if (!(j["animations"] is JArray anims) || anims.Count == 0) return null;
+            var nodes = (JArray)j["nodes"];
+            var list = new List<GltfClip>();
+            foreach (var a in anims)
+            {
+                var clip = new GltfClip { name = (string)a["name"] };
+                var samplers = (JArray)a["samplers"];
+                foreach (var c in (JArray)a["channels"])
+                {
+                    string path = (string)c["target"]["path"];
+                    if (path != "rotation" && path != "translation" && path != "scale") continue;
+                    var s = samplers[(int)c["sampler"]];
+                    if (((string)s["interpolation"] ?? "LINEAR") != "LINEAR") Main.Warn("glTF clip " + clip.name + ": only LINEAR interpolation is played");
+                    float[] times = ReadFloats(j, d, bin, (int)s["input"], 1);
+                    int comps = path == "rotation" ? 4 : 3;
+                    float[] v = ReadFloats(j, d, bin, (int)s["output"], comps);
+                    var ch = new GltfChannel { target = (string)nodes[(int)c["target"]["node"]]["name"], path = path, times = times, vals = new Vector4[times.Length] };
+                    for (int i = 0; i < times.Length; i++)
+                    {
+                        if (path == "rotation") ch.vals[i] = new Vector4(v[i * 4], -v[i * 4 + 1], -v[i * 4 + 2], v[i * 4 + 3]); // same X-mirror conversion as node rotations
+                        else if (path == "translation") ch.vals[i] = new Vector4(-v[i * 3], v[i * 3 + 1], v[i * 3 + 2], 0f);
+                        else ch.vals[i] = new Vector4(v[i * 3], v[i * 3 + 1], v[i * 3 + 2], 0f);
+                    }
+                    if (times.Length > 0) clip.duration = Mathf.Max(clip.duration, times[times.Length - 1]);
+                    clip.channels.Add(ch);
+                }
+                list.Add(clip);
+            }
+            return list;
+        }
+
+        static float[] ReadFloats(JObject j, byte[] d, int bin, int acc, int n)
+        {
+            var (off, count, _, _) = Acc(j, acc);
+            int stride = Stride(j, acc, n * 4);
+            var r = new float[count * n];
+            for (int k = 0; k < count; k++)
+                for (int c = 0; c < n; c++) r[k * n + c] = BitConverter.ToSingle(d, bin + off + k * stride + c * 4);
+            return r;
         }
 
         static int Stride(JObject j, int i, int dflt)
@@ -218,6 +274,39 @@ namespace RailRider
                 r[k] = type == 5125 ? (int)BitConverter.ToUInt32(d, bin + off + k * 4)
                      : type == 5123 ? BitConverter.ToUInt16(d, bin + off + k * 2) : d[bin + off + k];
             return r;
+        }
+    }
+    public class GltfChannel { public string target, path; public float[] times; public Vector4[] vals; }
+
+    /// <summary>One glTF animation clip as plain data (shared by every instance); Apply resolves nodes by name per instance.</summary>
+    public class GltfClip
+    {
+        public string name; public float duration;
+        public readonly List<GltfChannel> channels = new List<GltfChannel>();
+
+        public void Apply(IDictionary<string, Transform> nodes, float t)
+        {
+            foreach (var c in channels)
+            {
+                if (!nodes.TryGetValue(c.target, out var tr) || tr == null || c.times.Length == 0) continue;
+                int n = c.times.Length; Vector4 v;
+                if (t <= c.times[0]) v = c.vals[0];
+                else if (t >= c.times[n - 1]) v = c.vals[n - 1];
+                else
+                {
+                    int i = 0; while (i < n - 2 && t >= c.times[i + 1]) i++;
+                    float u = (t - c.times[i]) / Mathf.Max(1e-6f, c.times[i + 1] - c.times[i]);
+                    if (c.path == "rotation")
+                    {
+                        var q = Quaternion.Slerp(new Quaternion(c.vals[i].x, c.vals[i].y, c.vals[i].z, c.vals[i].w), new Quaternion(c.vals[i + 1].x, c.vals[i + 1].y, c.vals[i + 1].z, c.vals[i + 1].w), u);
+                        tr.localRotation = q; continue;
+                    }
+                    v = Vector4.Lerp(c.vals[i], c.vals[i + 1], u);
+                }
+                if (c.path == "rotation") tr.localRotation = new Quaternion(v.x, v.y, v.z, v.w);
+                else if (c.path == "translation") tr.localPosition = new Vector3(v.x, v.y, v.z);
+                else tr.localScale = new Vector3(v.x, v.y, v.z);
+            }
         }
     }
 }

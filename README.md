@@ -1,4 +1,4 @@
-# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.2.1 beta
+# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.3.0 beta
 
 A Red Ryder-style lever-action BB rifle, a buyable cab rifle rack, six generic cans and a breakable green glass bottle.
 Needs Unity Mod Manager and Custom Item Mod 0.2.0 (`custom_item_mod`). Beta: tested in game by the author only; see `README_BETA.txt` for what is still unproven.
@@ -16,7 +16,7 @@ The compiled DLL references the game's assemblies via `DVRoot` (default `B:\Stea
 - `CODEX_*_BRIEF.md` - briefs given to Codex for the model and icons.
 
 ## Controls (UMM panel can rebind)
-Y raise/lower, U cock, left click fire, Shift while aiming = subtle zoom. F8 debug spawn (rifle + targets), Shift+F8 rack, F7 one of each prop.
+Y raise/lower, U cock, left click fire, Shift while aiming = subtle zoom. F8 debug spawn (rifle + targets), Shift+F8 rack, Ctrl+F8 rat gallery, F7 one of each prop.
 
 ## Design
 - Items are built in code (no asset bundle) and injected into Custom Item Mod's item list.
@@ -27,3 +27,14 @@ Y raise/lower, U cock, left click fire, Shift while aiming = subtle zoom. F8 deb
 
 ## Licence
 MIT, see `LICENSE`. Requires Custom Item Mod by Tostiman, which has its own licence and is not included here.
+
+## Shop prices (career base prices)
+Scaled against DV's own General Store items, read from the game's scene data: Hammer $300 (stock 10), Soldering Gun $5,000 (stock 3).
+
+| Item | Price | In hammers | In soldering guns |
+|---|---|---|---|
+| Rail-Rider rifle | $1,500 | 5 | 0.3 |
+| Rail-Rider rifle rack | $600 | 2 | 0.12 |
+| Rail-Rider rat gallery | $900 | 3 | 0.18 |
+
+Cans and bottles are never sold (litter only); their listed prices ($5, $8) are unused.

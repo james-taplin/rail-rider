@@ -183,6 +183,12 @@ namespace RailRider
             {
                 // Items on shelves/tables may be kinematic; wake them unless held, racked or boxed.
                 if (itemBase.IsGrabbed() || itemBase.IsSnapped || itemBase.InContainer != null) { Main.Verbose("hit (blocked item) " + what); return; }
+                var gallery = itemBase.GetComponent<RatGallery>();
+                if (gallery != null)
+                {
+                    if (gallery.TryShot(hit.point, dir)) return; // a rat or the reset disc took the shot (it plays its own sound)
+                    Main.Verbose("hit rat gallery housing"); Fx.Impact(hit.point, hit.normal, RifleAudio.Kind.Tink); return;
+                }
                 var stag = itemBase.GetComponent<ScatterTag>(); if (stag != null) stag.Touch();
                 var brk = itemBase.GetComponent<Breakable>();
                 if (brk != null) { brk.Break(hit.point, dir); return; }

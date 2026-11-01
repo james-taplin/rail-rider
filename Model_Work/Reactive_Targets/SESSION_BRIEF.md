@@ -1,0 +1,17 @@
+# Rail-Rider reactive target models | New session brief
+
+Research, model, animate and show two standalone props for the Derail Valley Rail-Rider mod: a discarded paint tin intended for discovery around railway workshops, and a four-rat resetting target intended for eventual shop sale. This session ends at model review. Keep all new work in Model_Work/Reactive_Targets. Do not edit mod code, runtime Models, game files, shop or scatter configuration, or release packages. DV already has mugs. Build only the two requested props.
+
+## Research first
+Find a few credible visual references for each prop. For the tin, look for used steel paint tins, rolled rims, removable lids, wire bails and railway workshop wear. For the trap, look for actual four-animal knockdown galleries with a separate shoot-to-reset disc. Prefer manufacturer photographs or catalogues with multiple views and dimensions. Summarise the references with links, what each establishes about scale, finish and silhouette, and which dimensions you estimate. Use reference imagery as modelling evidence; create original meshes, graphics and textures. Show the reference shortlist and design direction, then proceed with both models.
+
+## Discarded paint tin
+Model a plausible workshop tin with a rolled steel rim, a separately modelled press-fit lid, wire bail on visible lugs, a visible interior and a few dried paint runs. Pick a restrained railway paint colour. Give bare tin, chipped paint and dried residue distinct finishes. Make two independently replayable reactions: a side hit makes the tin rock and settle with the lid seated; a lid hit tips the lid free, exposes the opening and lets the lid land beside the tin. Start each preview from the intact pose so the reactions are easy to compare.
+
+## Resetting rat gallery
+Model a portable steel trap with four individually hinged, recognisably rat-shaped SILVER targets and one separate CIRCULAR reset target. Make the silver silhouettes legible against the darker housing. Detail the visible exterior: folded edges, fasteners, target thickness, pivot points and visible surfaces behind the fallen rats. Each whole rat is its own hit target. A hit drops only that rat and it stays down; a hit on the circle raises all fallen rats. Keep the circle visible and reachable in every state. Show a partial reset as well as all four down and reset. Use keyed pivots and simple animation; internal rods, magnets and mechanical simulation are outside scope.
+
+## Deliverables and review
+Provide editable Blender sources, game-scale textured GLBs with named moving parts and animation clips, and a working interactive 3D preview for each model. The reviewer must be able to drag to orbit, zoom, inspect underneath and behind, and trigger or replay each reaction. Provide clear local launch instructions or a working viewer link. If a gallery viewer tracks state, allow individual rat selection in any order and a separate reset control. Include one still of each prop and a short animation preview as convenient companions to the viewer.
+
+Open the exported assets in the intended viewer and verify the materials, scale and clips survive export. Orbit each asset; check the lid clears the rim, fallen rats stay down independently, standing rats stay standing during a partial reset, and the circle remains exposed. Deliver links to the viewers and files, list the controls and call out any unverified behaviour. Stop after presenting the models for review.

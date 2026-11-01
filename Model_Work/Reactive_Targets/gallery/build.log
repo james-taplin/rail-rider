@@ -1,0 +1,99 @@
+C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Reactive_Targets\gallery\build_gallery.py:20: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat=bpy.data.materials.new(name); mat.use_nodes=True
+00:00.781  reports          | WARNING Path 'B:\SteamLibrary\steamapps\common\Blender\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Dots Stroke'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+00:00.781  reports          | WARNING Path 'B:\SteamLibrary\steamapps\common\Blender\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Material'
+Info: Saved as "rat_gallery.blend"
+INFO Draco is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at B:\SteamLibrary\steamapps\common\Blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+01:11:21 | INFO: Starting glTF 2.0 export
+01:11:21 | INFO: Extracting primitive: 45 degree rear backstop
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.001
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.002
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.003
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.006
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.006
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Fitted solid end caps
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.004
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.005
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.002
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Front stencil
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.003
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.004
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.007
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.010
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.013
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.016
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.008
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.009
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.011
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.012
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.014
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.015
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.017
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.018
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.019
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Rat_01_Silver
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.020
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Rat_02_Silver
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.021
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Rat_03_Silver
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.022
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Rat_04_Silver
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.023
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.025
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.009
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cylinder.024
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.005
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.007
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.008
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Extracting primitive: Cube.001
+01:11:21 | INFO: Primitives created: 1
+01:11:21 | INFO: Finished glTF 2.0 export in 0.10317087173461914 s
+00:09.578  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Reactive_Targets\gallery\rat_gallery_still.png'
+
+GALLERY FINISHED
+
+Blender quit

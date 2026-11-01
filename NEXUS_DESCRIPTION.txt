@@ -10,6 +10,7 @@ Rail-Rider adds a Red Ryder-style lever-action BB rifle to Derail Valley, along 
 [*][b]A real BB[/b]: a 4.5 mm steel BB with proper drag and gravity, zeroed for 15 m. It takes time to arrive, so you'll learn to lead and to allow for drop at longer range.
 [*][b]Things move when you hit them[/b]: light props such as mugs, mice, clipboards and cans get a proper shove. Locomotives, heavy items and scenery only stop the shot.
 [*][b]Rifle rack[/b]: a pine rack with two steel hooks you can place on cab surfaces. Hang your rifle on it and take it down again. Racked rifles are saved with your game.
+[*][b]Rat gallery[/b]: a resettable steel target with four rats and a round reset disc. Shoot a rat and it drops and stays down; shoot the disc and they all pop back up. Sold in the shops.
 [*][b]Cans and bottles[/b]: six plain cans and one green glass bottle that shatters. They aren't sold; you'll find them lying around near stations and by the bins and skips. Anything you leave alone tidies itself away once you've moved on.
 [*][b]Sound and feel[/b]: a cocking stroke, recoil, impact effects, and a metallic rattle if you shake or turn the rifle quickly or knock it. Sounds are synthesised, and you can replace any of them with your own WAV files.
 [/list]
@@ -22,7 +23,7 @@ All keys can be changed in the mod's panel (Ctrl+F10).
 [*][b]U[/b]: cock the lever (one stroke per shot; from the sights it lowers, cocks, and raises again)
 [*][b]Left click[/b] while raised and cocked: fire. Uncocked gives a dry click.
 [*][b]Rack[/b]: place it like any other cab gadget. With the rifle held and lowered, click the rack to hang it; grab the rifle to take it off.
-[*][b]F8[/b]: debug spawn of a rifle and a target line-up. [b]Shift+F8[/b]: a rack. [b]F7[/b]: one of every can and a bottle. These can be switched off in the panel.
+[*][b]F8[/b]: debug spawn of a rifle and a target line-up. [b]Shift+F8[/b]: a rack. [b]Ctrl+F8[/b]: a rat gallery. [b]F7[/b]: one of every can and a bottle. These can be switched off in the panel.
 [/list]
 
 [size=4][b]Installation[/b][/size]
@@ -54,6 +55,10 @@ This is a beta, so please tell me what you find. Still to be proven outside my o
 [/list]
 
 [size=4][b]Changelog[/b][/size]
+[b]0.3.0[/b]
+[list]
+[*]new shop item: the rat gallery, four steel rats and a reset disc that you shoot to drop and reset
+[/list]
 [b]0.2.1[/b]
 [list]
 [*]hold shift while aiming for a subtle zoom, and the camera no longer clips into the rifle when aiming

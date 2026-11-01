@@ -122,7 +122,7 @@ namespace RailRider
         public static int ClearLoose(out int kept)
         {
             kept = 0; int removed = 0;
-            var names = new HashSet<string>(PropFactory.Names) { RifleFactory.ItemName, RackFactory.ItemName };
+            var names = new HashSet<string>(PropFactory.Names) { RifleFactory.ItemName, RackFactory.ItemName, GalleryFactory.ItemName };
             var inv = SingletonBehaviour<Inventory>.Instance;
             var storage = SingletonBehaviour<StorageController>.Instance;
             foreach (var item in Object.FindObjectsOfType<ItemBase>())

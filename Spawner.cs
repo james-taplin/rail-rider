@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RailRider
 {
-    /// <summary>Debug helper: F8 drops a Rail-Rider at your feet (in front of you), Shift+F8 a rack. Toggle in the mod panel.</summary>
+    /// <summary>Debug helper: F8 drops a Rail-Rider at your feet (in front of you), Shift+F8 a rack, Ctrl+F8 a rat gallery. Toggle in the mod panel.</summary>
     public class Spawner : MonoBehaviour
     {
         public static void Create()
@@ -20,14 +20,32 @@ namespace RailRider
             if (Input.GetKeyDown(KeyCode.F7)) { SpawnProps(); return; }
             if (!Input.GetKeyDown(Main.Key(Main.S.spawnKey, KeyCode.F8))) return;
             bool rack = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            bool gallery = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             var cam = PlayerManager.PlayerCamera;
             if (cam == null) return;
+            if (gallery) { SpawnGallery(cam); return; }
             if (!rack) SpawnTargets(); // F8 also lays out a plinking line-up: 6 random cans + 2 bottles
             var prefab = Resources.Load("custom_item_mod/" + (rack ? RackFactory.ItemName : RifleFactory.ItemName) + "/prefab") as GameObject;
             if (prefab == null) { Main.Warn("spawn: item prefab not registered (is Custom Item Mod loaded, and are you in a game?)"); return; }
             Vector3 p = cam.transform.position + Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized * 0.8f;
             if (Physics.Raycast(p + Vector3.up * 0.5f, Vector3.down, out var hit, 3f, ~0, QueryTriggerInteraction.Ignore)) p = hit.point + Vector3.up * 0.1f;
             var go = Instantiate(prefab, p, Quaternion.identity);
+            var spec = go.GetComponent<InventoryItemSpec>();
+            if (spec != null) spec.BelongsToPlayer = true;
+            var ib = go.GetComponent<DV.CabControls.ItemBase>();
+            if (ib != null) DV.Utils.SingletonBehaviour<StorageController>.Instance.AddItemToWorldStorage(ib);
+            Main.Log("spawned " + go.name + " at " + p);
+        }
+
+        // Ctrl+F8: one rat gallery on the floor 1.2 m ahead, facing you.
+        static void SpawnGallery(Camera cam)
+        {
+            var prefab = Resources.Load("custom_item_mod/" + GalleryFactory.ItemName + "/prefab") as GameObject;
+            if (prefab == null) { Main.Warn("spawn: rat gallery prefab not registered"); return; }
+            Vector3 fwd = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized;
+            Vector3 p = cam.transform.position + fwd * 1.2f;
+            if (Physics.Raycast(p + Vector3.up * 0.6f, Vector3.down, out var hit, 3f, ~0, QueryTriggerInteraction.Ignore)) p = hit.point + Vector3.up * 0.02f;
+            var go = Instantiate(prefab, p, Quaternion.LookRotation(-fwd, Vector3.up)); // the opening faces +Z, so turn it back toward the player
             var spec = go.GetComponent<InventoryItemSpec>();
             if (spec != null) spec.BelongsToPlayer = true;
             var ib = go.GetComponent<DV.CabControls.ItemBase>();

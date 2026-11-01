@@ -1,0 +1,6 @@
+00:00.625  blend            | Read blend: "C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Reactive_Targets\gallery\rat_gallery.blend"
+00:08.453  render           | Saved: 'C:\Users\james\Desktop\Derail Valley Mods\Mods (code)\RailRider\Model_Work\Reactive_Targets\gallery\rat_gallery_front.png'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+Error: Not freed memory blocks: 4, total unfreed memory 0.000092 MB

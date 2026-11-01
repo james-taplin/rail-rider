@@ -1,0 +1,22 @@
+# Reactive targets: reference shortlist and design direction
+
+The linked images are visual evidence only. The models, surfaces and graphics are original interpretations. Dimensions below are for visual/game scale, not manufacturing drawings.
+
+## Discarded workshop paint tin
+
+- [Aaron Packaging: one-gallon steel paint can with lid, ears and bail](https://aaronpackaging.com/products/1-gallon-metal-paint-cans-unlined-w-ears-bails-and-lids-included) — product photographs and a measured **6.56 in diameter × 7.63 in height** (about **167 × 194 mm**). The short cylindrical form, two opposed ears and wire handle are the primary scale and silhouette reference. It is a new can, not a wear reference.
+- [SKS Bottle: metal paint-can construction](https://www.sks-bottle.com/info/product-spotlight-metal-paint-cans.html) — illustrated product construction, tin-plated steel, lid and curled-edge seal, and an optional metal bail. Evidence for distinct bare steel, rim and lid; the illustrated closure includes a locking ring, so it is not copied literally as a press-fit lid.
+- [Leland Little: used drip-painted metal pail](https://www.lelandlittle.com/items/390101/drip-painted-pail-featured-in-a-bob-timberlake-painting?listId=78509) — photographs of a used handled metal paint container with drips, scuffs and light rust. A pail rather than this exact can type: wear inspiration only.
+- [Hammerite: closing and storing a metal paint can](https://www.hammerite.ie/en/tips-and-advice/storing-your-hammerite-can) — manufacturer describes paint collecting at the rim and a lid seated and tapped in place, supporting local residue and a removable fitted lid.
+- [B&O Railroad Museum: Passenger Car Works](https://www.borail.org/collection/bo-passenger-car-works/) — documents railway paint shops and storage as context, not a photograph proving a particular tin or pattern of wear.
+
+**Design:** a roughly 0.167 m diameter, 0.194 m high gallon-style tin; muted railway green paint, small local chips and a few dried runs; exposed steel at the rim, lid and bail. The body dimensions are based on the product listing; wall thickness, rolled rim cross-section, lugs, residue and precise wear are estimated. The interior must read as a hollow vessel when the lid leaves. No brand graphics are copied.
+
+## Four-rat resetting gallery
+
+- [Anglo Arms knockdown rat target](https://bbguns4less.co.uk/products/metal-knock-down-target-system-with-rat-reset.html) — product photograph and description show the requested combination: four rat-shaped targets around a separate round reset. Listed envelope **50 × 20.5 × 22 cm** (length × width × height); each hit animal stays down until the middle circle is hit. This is the primary layout reference.
+- [AirForceOne Rat-a-Tat gallery](https://www.shootingparty.uk/product/resettable-knock-down-rat-target/) — maker/brand product description and photograph establish a black powder-coated steel pellet trap with contrasting silver rat silhouettes and an angled deflector. Listed overall **49 × 22 × 20 cm** and individual large rats about **100 × 40 mm**. Its central reset is a smaller rat, so it is a finish, housing and animal-size reference, not the requested reset shape.
+- [Wolfman magnetic target gallery](https://www.thewolfman.co.uk/shop-by-brand/wolfman/magnetic-knock-down-airgun-pellet-trap-target-gallery.html) — product reference for steel housing, powder coat, angled catch plate, four independent falling targets and central reset; lists ~49 cm length and targets around 2 mm thick. Animal variants and views help cross-check the general construction.
+- [KCT pellet catcher](https://www.kctdirect.co.uk/products/kct-shooting-target-pellet-catcher) — multiple product images and a related 4+1 central circular reset layout; gives **49 × 19 × 22 cm** and describes wall holes. The pictured variants are ducks/zombies, not rats; use only for body, reset, and scale context.
+
+**Design:** approximately **0.50 m wide × 0.205 m deep × 0.22 m high**, dark folded steel collector with silver rat cutouts and a separate central silver circle. Four ~0.10 × 0.04 m rats are based on the AirForceOne listing. The circle diameter, individual sheet folds, fasteners and pivot positions are estimates guided by the photos; target sheet thickness is approximately 2 mm. The internal reset mechanism is intentionally omitted in favour of simple independent keyed pivots. The circle stays exposed during every preview state.
