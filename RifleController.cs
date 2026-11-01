@@ -72,6 +72,7 @@ namespace RailRider
 
         void OnDestroy()
         {
+            zoom01 = 0f; CameraEffects(false);
             if (!wiredUp || item == null) return;
             item.Grabbed -= OnGrabbed;
             item.Ungrabbed -= OnUngrabbed;
@@ -79,7 +80,7 @@ namespace RailRider
             if (item.SnappableItem != null) item.SnappableItem.ItemSnappingChanged -= OnSnapChanged;
         }
 
-        void OnDisable() { if (wiredUp) AbortAll(); }
+        void OnDisable() { if (wiredUp) { AbortAll(); zoom01 = 0f; CameraEffects(false); } }
 
         // ---- handling events (each plays at most one rattle; RifleAudio also debounces) ----
         void OnGrabbed(ControlImplBase _)
@@ -169,8 +170,58 @@ namespace RailRider
         float cockShow;   // 0 = carry pose, 1 = cocking pose (lever visible)
         static Transform Cam => PlayerManager.PlayerCamera != null ? PlayerManager.PlayerCamera.transform : Camera.main?.transform;
 
+        // ---- camera helpers: subtle Shift zoom while aimed, and a closer near plane so the rifle does not clip ----
+        float zoom01, baseFov, origNear = -1f; bool fovTouched, nearTouched;
+        static CameraZoom dvZoom;
+        static System.Reflection.FieldInfo fNormal, fZoomed, fPressed;
+
+        // DV's own right-click zoom keeps its FOVs and "pressed" state in private fields; read them rather than guess.
+        static bool DvZoom(out float normal, out float zoomed, out bool pressed)
+        {
+            normal = 50f; zoomed = 20f; pressed = false;
+            try
+            {
+                if (dvZoom == null) dvZoom = Object.FindObjectOfType<CameraZoom>();
+                if (dvZoom == null) return false;
+                fNormal = fNormal ?? HarmonyLib.AccessTools.Field(typeof(CameraZoom), "normalFOV");
+                fZoomed = fZoomed ?? HarmonyLib.AccessTools.Field(typeof(CameraZoom), "zoomedFOV");
+                fPressed = fPressed ?? HarmonyLib.AccessTools.Field(typeof(CameraZoom), "isZoomPressed");
+                normal = (float)fNormal.GetValue(dvZoom); zoomed = (float)fZoomed.GetValue(dvZoom); pressed = (bool)fPressed.GetValue(dvZoom);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        void CameraEffects(bool active)
+        {
+            if (!active && !nearTouched && !fovTouched && zoom01 <= 0f) return; // nothing to apply or undo
+            var cam = PlayerManager.PlayerCamera;
+            if (cam == null) return;
+            bool wantNear = active && (aim01 > 0.001f || wantRaised || cockShow > 0.001f || cock != Cock.Idle);
+            if (wantNear)
+            {
+                if (origNear < 0f) { origNear = cam.nearClipPlane; Main.Verbose("camera near clip " + origNear + " -> " + Mathf.Min(origNear, Main.S.aimNearClip)); }
+                cam.nearClipPlane = Mathf.Min(origNear, Main.S.aimNearClip); nearTouched = true;
+            }
+            else if (nearTouched) { cam.nearClipPlane = origNear; nearTouched = false; origNear = -1f; }
+
+            bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            float dvNormal, dvZoomed; bool dvPressed;
+            bool haveDv = DvZoom(out dvNormal, out dvZoomed, out dvPressed);
+            bool wantZoom = active && haveDv && Main.S.aimZoom > 0.001f && shift && !dvPressed && wantRaised && aim01 >= 0.99f && cock == Cock.Idle && InputAllowed();
+            zoom01 = Mathf.MoveTowards(zoom01, wantZoom ? 1f : 0f, Time.deltaTime / 0.12f);
+            if (zoom01 > 0f)
+            {
+                if (!fovTouched) { baseFov = dvNormal; fovTouched = true; }
+                float target = baseFov - (baseFov - dvZoomed) * Mathf.Clamp01(Main.S.aimZoom);
+                cam.fieldOfView = Mathf.Lerp(baseFov, target, Mathf.SmoothStep(0f, 1f, zoom01));
+            }
+            else if (fovTouched) { cam.fieldOfView = baseFov; fovTouched = false; }
+        }
+
         void LateUpdate()
         {
+            CameraEffects(Held);
             if (Held)
             {
                 var cam = Cam;

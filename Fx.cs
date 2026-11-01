@@ -24,7 +24,7 @@ namespace RailRider
         public static void Impact(Vector3 point, Vector3 normal, RifleAudio.Kind sound)
         {
             Burst(point, normal, new Color(0.62f, 0.56f, 0.46f, 0.7f), 14, 0.03f, 0.07f, 0.4f, 1.3f, 0.35f, 0.7f, false);
-            if (sound != RifleAudio.Kind.Thud && sound != RifleAudio.Kind.Brick) Burst(point, normal, new Color(1f, 0.85f, 0.4f, 1f), 7, 0.006f, 0.012f, 2f, 5f, 0.08f, 0.18f, true);
+            if (sound != RifleAudio.Kind.Thud && sound != RifleAudio.Kind.Brick && sound != RifleAudio.Kind.Wood) Burst(point, normal, new Color(1f, 0.85f, 0.4f, 1f), 7, 0.006f, 0.012f, 2f, 5f, 0.08f, 0.18f, true);
             RifleAudio.PlayAt(sound, point, sound == RifleAudio.Kind.Thud ? 0.8f : 0.9f);
         }
 

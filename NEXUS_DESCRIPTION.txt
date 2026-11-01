@@ -18,6 +18,7 @@ Rail-Rider adds a Red Ryder-style lever-action BB rifle to Derail Valley, along 
 All keys can be changed in the mod's panel (Ctrl+F10).
 [list]
 [*][b]Y[/b]: raise or lower the rifle to the sights
+[*][b]Shift[/b] while raised: a subtle zoom, about half of the normal right-click zoom
 [*][b]U[/b]: cock the lever (one stroke per shot; from the sights it lowers, cocks, and raises again)
 [*][b]Left click[/b] while raised and cocked: fire. Uncocked gives a dry click.
 [*][b]Rack[/b]: place it like any other cab gadget. With the rifle held and lowered, click the rack to hang it; grab the rifle to take it off.
@@ -53,6 +54,13 @@ This is a beta, so please tell me what you find. Still to be proven outside my o
 [/list]
 
 [size=4][b]Changelog[/b][/size]
+[b]0.2.1[/b]
+[list]
+[*]hold shift while aiming for a subtle zoom, and the camera no longer clips into the rifle when aiming
+[*]an empty rifle rack can be taken off the wall again
+[*]rear sight lowered to match the front blade and no longer floats above the receiver
+[*]wooden surfaces now have their own impact sounds, and the cocking sound is back to the original ratchet
+[/list]
 [b]0.2.0[/b]
 [list]
 [*]new pine rifle rack with steel hooks and leather linings

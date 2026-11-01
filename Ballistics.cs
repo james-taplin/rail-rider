@@ -153,6 +153,9 @@ namespace RailRider
             return s;
         }
 
+        // Matched against the collider's hierarchy path and physics material name.
+        static readonly string[] WoodWords = { "wood", "plank", "timber", "sleeper", "lumber", "pallet", "crate", "fence", "bench", "beam", "cabinet", "shelf", "desk", "log_", "_log", "logs", "stump", "barrel" };
+
         static RifleAudio.Kind ImpactSound(Collider collider)
         {
             if (collider.GetComponentInParent<CanTarget>() != null) return RifleAudio.Kind.Can;
@@ -161,7 +164,11 @@ namespace RailRider
             string surface = Path(collider.transform) + "/" + (material == null ? "" : material.name);
             if (surface.IndexOf("brick", System.StringComparison.OrdinalIgnoreCase) >= 0)
                 return RifleAudio.Kind.Brick;
-            return collider.GetType().Name.Contains("Terrain") ? RifleAudio.Kind.Thud : RifleAudio.Kind.Tink;
+            if (collider.GetType().Name.Contains("Terrain")) return RifleAudio.Kind.Thud;
+            foreach (var w in WoodWords)
+                if (surface.IndexOf(w, System.StringComparison.OrdinalIgnoreCase) >= 0) return RifleAudio.Kind.Wood;
+            Main.Verbose("impact sound tink (no surface match) for " + surface);
+            return RifleAudio.Kind.Tink;
         }
 
         static void Impact(RaycastHit hit, Vector3 travel, float range, float age)

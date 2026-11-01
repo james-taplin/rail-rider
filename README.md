@@ -1,4 +1,4 @@
-# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.2.0 beta
+# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.2.1 beta
 
 A Red Ryder-style lever-action BB rifle, a buyable cab rifle rack, six generic cans and a breakable green glass bottle.
 Needs Unity Mod Manager and Custom Item Mod 0.2.0 (`custom_item_mod`). Beta: tested in game by the author only; see `README_BETA.txt` for what is still unproven.
@@ -16,7 +16,7 @@ The compiled DLL references the game's assemblies via `DVRoot` (default `B:\Stea
 - `CODEX_*_BRIEF.md` - briefs given to Codex for the model and icons.
 
 ## Controls (UMM panel can rebind)
-Y raise/lower, U cock, left click fire. F8 debug spawn (rifle + targets), Shift+F8 rack, F7 one of each prop.
+Y raise/lower, U cock, left click fire, Shift while aiming = subtle zoom. F8 debug spawn (rifle + targets), Shift+F8 rack, F7 one of each prop.
 
 ## Design
 - Items are built in code (no asset bundle) and injected into Custom Item Mod's item list.

@@ -17,4 +17,5 @@ Write-Host "Built (NOT installed): $pkg"
 
 if (Test-Path (Join-Path $PSScriptRoot "Models\icons")) { New-Item -ItemType Directory -Force (Join-Path $pkg "Models\icons") | Out-Null; Get-ChildItem (Join-Path $PSScriptRoot "Models\icons") -Filter *.png | Copy-Item -Destination (Join-Path $pkg "Models\icons") -Force }
 
+if (Test-Path (Join-Path $pkg "Audio")) { Remove-Item (Join-Path $pkg "Audio\*.wav") -Force }
 if (Test-Path (Join-Path $PSScriptRoot "Audio")) { New-Item -ItemType Directory -Force (Join-Path $pkg "Audio") | Out-Null; Get-ChildItem (Join-Path $PSScriptRoot "Audio") -Filter *.wav | Copy-Item -Destination (Join-Path $pkg "Audio") -Force }

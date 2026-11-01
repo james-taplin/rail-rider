@@ -256,6 +256,16 @@ namespace RailRider
             var gws = target as GadgetWithSnapPoint;
             if (gws == null) { Main.Warn("rack target is not GadgetWithSnapPoint"); return; }
 
+            // DV removes a gadget by raycasting for a collider under the GadgetBase. The item's own box lives on the
+            // prefab root, not on the placed gadget, and the snap volume below is a trigger, so give the gadget a thin
+            // solid plate: an empty rack can then be taken off the wall (GadgetWithSnapPoint refuses while it holds a rifle).
+            if (gws.GetComponent<Collider>() == null)
+            {
+                var plate = gws.gameObject.AddComponent<BoxCollider>();
+                plate.center = new Vector3(0, 0, -0.012f); plate.size = new Vector3(0.70f, 0.10f, 0.028f);
+            }
+            AccessTools.Field(typeof(DV.Customization.Gadgets.GadgetBase), "highlightMeshes")?.SetValue(gws, gws.GetComponentsInChildren<MeshFilter>());
+
             // Muzzle along gadget -X presents the carved stock face to the cab.
             var snapGo = new GameObject("RackSnap");
             snapGo.transform.SetParent(gws.transform, false);

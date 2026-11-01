@@ -1,9 +1,15 @@
-Rail-Rider plinking rifle - 0.2.0 BETA (UMM)
+Rail-Rider plinking rifle - 0.2.1 BETA (UMM)
 
 A lever-action BB rifle for plinking, plus a cab rifle rack, six generic cans and a breakable green glass bottle.
 Beta: expect rough edges. Hand-built props and no hand model. Includes the adult rifle model and 40 firing, cocking, shake and impact sound clips.
 
-WHAT IS NEW IN 0.2.0
+WHAT IS NEW IN 0.2.1
+- Hold Shift while aiming for a subtle zoom (half of the normal right-click zoom). The camera near plane is pulled in while aiming so the rifle no longer clips.
+- An empty rack can be taken off the wall again (it stays fixed while it holds a rifle).
+- Rear sight is now level with the front blade and sits flush on the receiver.
+- Wooden surfaces get their own impact sounds; the cocking stroke is back to the original ratchet.
+
+WHAT WAS NEW IN 0.2.0
 - New rack model: pine backing board with two steel hooks and leather linings. The rifle hangs muzzle-left with the carved stock side facing the cab.
 - New rifle model and engraving (relief-lit wood, lever-action detail), new inventory art and icons for the rack, cans and bottle.
 - Sampled sounds: cock, shot, shake rattles, and impact sounds that depend on what you hit (can, glass, locomotive, brick, ground, other).
@@ -20,6 +26,7 @@ The rifle and the rifle rack are sold in the normal shops. The six cans and the 
 
 CONTROLS (rebindable in the mod's UMM panel; defaults are guesses that may clash with your bindings)
 - Pick the rifle up as normal.
+- Hold Shift while raised: subtle zoom
 - Y  raise / lower the rifle (sights only, no hip fire)
 - U  cock the lever (one stroke per shot; lowers the rifle first and returns to aim afterwards)
 - Left click while raised and cocked: fire. Raised but uncocked gives a dry click.

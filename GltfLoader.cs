@@ -129,6 +129,7 @@ namespace RailRider
 
                     // Marked stock face is on the model's -X (rifle right); the player sees the left side. Swap the
                     // texture's marked/clean halves for this mesh and mirror u so the text still reads correctly.
+                    float nodeY = node["translation"] is JArray nt ? (float)nt[1] : 0f;
                     float shift = 0f;
                     if (uv != null && name == mirrorEngravingOnMesh)
                     {
@@ -144,6 +145,17 @@ namespace RailRider
                     {
                         verts[i] = new Vector3(-pos[i].x, pos[i].y, pos[i].z);
                         if (name == "Rear sight leaf" && frontY > 0f && verts[i].y > frontY) verts[i].y = frontY;
+                        if (frontY > 0f)
+                        {
+                            // Rear notch: top flush with the blade tip, base sunk into the receiver so nothing floats.
+                            float wy = verts[i].y + nodeY;
+                            if (name == "Rear notch - open U")
+                            {
+                                if (wy > frontY) verts[i].y = frontY - nodeY;
+                                else if (wy < 0.0345f) verts[i].y = 0.0300f - nodeY;
+                            }
+                            else if (name == "Rear sight spring" && wy < 0.0330f) verts[i].y = 0.0305f - nodeY;
+                        }
                         norms[i] = nor != null ? new Vector3(-nor[i].x, nor[i].y, nor[i].z) : Vector3.up;
                         if (uv != null)
                         {

@@ -11,7 +11,7 @@ namespace RailRider
     /// </summary>
     public static class RifleAudio
     {
-        public enum Kind { Cock, Equip, PutDown, Fire, Shake, Impact, Dry, Tink, Thud, Glass, Can, Loco, Brick }
+        public enum Kind { Cock, Equip, PutDown, Fire, Shake, Impact, Dry, Tink, Thud, Glass, Can, Loco, Brick, Wood }
 
         static readonly Dictionary<Kind, AudioClip[]> clips = new Dictionary<Kind, AudioClip[]>();
         static readonly Dictionary<Kind, float> last = new Dictionary<Kind, float>();
@@ -61,6 +61,7 @@ namespace RailRider
                 if (pool.Length == 0)
                 {
                     if (k == Kind.Can || k == Kind.Loco || k == Kind.Brick) return Clip(Kind.Tink);
+                    else if (k == Kind.Wood) return Clip(Kind.Thud);
                     else if (k == Kind.Tink || k == Kind.Thud || k == Kind.Glass) { pool = new AudioClip[3]; for (int i = 0; i < 3; i++) pool[i] = Synth(k, i); }
                     else if (k == Kind.Cock || k == Kind.Fire || k == Kind.Dry) pool = new[] { Synth(k, 0) };
                     else
