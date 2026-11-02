@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace RailRider
 {
-    /// <summary>Live BB: advances in real game time (so it has travel time), gravity + drag, SphereCast sweep per sub-step, inherits the shooter's motion.</summary>
+    /// <summary>Live BB / pellet: advances in real game time (so it has travel time), gravity + drag, SphereCast sweep per sub-step,
+    /// inherits the shooter's motion. Projectile, drag, zero and impact tuning come from the rifle's RifleProfile.</summary>
     public static class Ballistics
     {
-        const float Step = 0.01f, MaxTime = 4f, Radius = 0.006f;
+        const float Step = 0.01f, MaxTime = 4f;
         static int mask = -2;
 
         static int Mask()
@@ -25,47 +26,46 @@ namespace RailRider
 
         static readonly RaycastHit[] buf = new RaycastHit[24];
 
-        // Quadratic-drag flight, same integrator for aiming (dry run) and for the real shot.
-        static void StepFlight(ref Vector3 p, ref Vector3 vel, Vector3 g)
-        {
-            Vector3 acc = g - Main.S.dragK * vel.magnitude * vel;
-            p += vel * Step + 0.5f * acc * Step * Step;
-            vel += acc * Step;
-        }
-
         // Fixed zero, like a real rifle's sights: the launch elevation above the sight line is solved ONCE (level rifle,
         // 2D flight with gravity + drag) for zeroRange and cached. Every shot then just applies that fixed angle to
         // wherever the sights are pointing, so the point of impact never "adjusts" with distance to the target.
-        static float zeroAlphaDeg = float.NaN; static float zKeyRange, zKeySpeed, zKeyDrag, zKeyH, zKeyDx;
+        class Zero { public float alphaDeg = float.NaN, range, speed, drag, h, dx; }
+        static readonly Dictionary<string, Zero> zeros = new Dictionary<string, Zero>();
 
-        static float ZeroAlphaDeg(float h, float dx)
+        static float ZeroAlphaDeg(float h, float dx, RifleProfile pr)
         {
-            float R = Main.S.zeroRange, v0 = Main.S.muzzleSpeed, k = Main.S.dragK;
-            if (!float.IsNaN(zeroAlphaDeg) && zKeyRange == R && zKeySpeed == v0 && zKeyDrag == k && Mathf.Approximately(zKeyH, h) && Mathf.Approximately(zKeyDx, dx)) return zeroAlphaDeg;
+            float R = pr.ZeroRange, v0 = pr.MuzzleSpeed, k = pr.DragK;
+            if (!zeros.TryGetValue(pr.Id, out var z)) zeros[pr.Id] = z = new Zero();
+            if (!float.IsNaN(z.alphaDeg) && z.range == R && z.speed == v0 && z.drag == k && Mathf.Approximately(z.h, h) && Mathf.Approximately(z.dx, dx)) return z.alphaDeg;
             // frame: x along the sight line from the eye, y up; sight line is y = 0. Muzzle at (dx, -h).
             float alpha = Mathf.Atan2(h, R - dx);
             for (int it = 0; it < 12; it++)
             {
-                float x = dx, y = -h, vx = v0 * Mathf.Cos(alpha), vy = v0 * Mathf.Sin(alpha);
-                for (int s = 0; s < 400 && x < R; s++)
+                float x = dx, y = -h, vx = v0 * Mathf.Cos(alpha), vy = v0 * Mathf.Sin(alpha), px = x, py = y;
+                for (int s = 0; s < 2000 && x < R; s++)
                 {
                     float sp = Mathf.Sqrt(vx * vx + vy * vy);
                     float ax = -k * sp * vx, ay = -9.81f - k * sp * vy;
+                    px = x; py = y;
                     x += vx * Step + 0.5f * ax * Step * Step; y += vy * Step + 0.5f * ay * Step * Step;
                     vx += ax * Step; vy += ay * Step;
                 }
+                if (x > px) y = py + (y - py) * (R - px) / (x - px); // height exactly at R (a fast pellet covers ~3 m per step)
                 alpha += -y / Mathf.Max(1f, R - dx); // landed low (y<0) => aim up
             }
-            zKeyRange = R; zKeySpeed = v0; zKeyDrag = k; zKeyH = h; zKeyDx = dx;
-            zeroAlphaDeg = alpha * Mathf.Rad2Deg;
-            Main.Log($"zero solved: {zeroAlphaDeg:0.000} deg above the sight line for {R:0} m (muzzle {h * 100f:0.0} cm below sights)");
-            return zeroAlphaDeg;
+            z.range = R; z.speed = v0; z.drag = k; z.h = h; z.dx = dx;
+            z.alphaDeg = alpha * Mathf.Rad2Deg;
+            Main.Log($"zero solved ({pr.Id}): {z.alphaDeg:0.000} deg above the sight line for {R:0} m at {v0:0} m/s (muzzle {h * 100f:0.0} cm below sights)");
+            return z.alphaDeg;
         }
 
-        public static void Fire(RifleController rc, RifleRefs r)
+        public static void Fire(RifleController rc, RifleRefs r) => Fire(rc, r, RifleProfile.Get(r.profileId));
+
+        public static void Fire(RifleController rc, RifleRefs r, RifleProfile pr)
         {
             Vector3 g = Physics.gravity, M = r.muzzle.position, C = r.chamber.position;
-            float v = Main.S.muzzleSpeed;
+            ContactCallbacks.NotifyDischarged(M);
+            float v = pr.MuzzleSpeed;
 
             Vector3 eye = r.rearSight.position;
             Vector3 sight = (r.frontSight.position - eye).normalized;
@@ -73,21 +73,24 @@ namespace RailRider
             float h = Vector3.Dot(eye - M, up);              // muzzle below the sight line
             float dx = Vector3.Dot(M - eye, sight);          // muzzle ahead of the rear sight
             Vector3 left = Vector3.Cross(sight, up);         // positive rotation about this pitches up
-            Vector3 dir = (Quaternion.AngleAxis(ZeroAlphaDeg(h, dx), left) * sight).normalized;
+            Vector3 dir = (Quaternion.AngleAxis(ZeroAlphaDeg(h, dx, pr), left) * sight).normalized;
             Main.Verbose($"launch {Vector3.Angle(dir, sight):0.00} deg above sight line, elevation {Mathf.Asin(dir.y) * Mathf.Rad2Deg:0.00} deg");
 
             // Bore check: if the barrel is buried in geometry the shot dies at the surface.
-            if (Cast(rc, C, M, out var boreHit)) { Impact(boreHit, M - C, 0f, 0f); return; }
+            var shot = new Shot { pos = M, start = M, rc = rc, drag = pr.DragK, mass = pr.ProjectileMass, boost = pr.PowerBoost,
+                                  maxDv = pr.MaxDeltaV, maxMass = pr.MaxTargetMass, radius = pr.Radius };
+            if (Cast(rc, C, M, shot.radius, out var boreHit)) { Impact(boreHit, M - C, 0f, 0f, shot); return; }
 
             // Launch a live projectile. It leaves at muzzle speed PLUS the shooter's own velocity (so a BB fired inside a
             // moving cab travels with the cab), then flies in real game time: 0.17 s to 15 m at ~90 m/s.
             Vector3 inherit = rc.SafeWorldVelocity;
-            live.Add(new Shot { pos = M, vel = dir * v + inherit, inherit = inherit, start = M, rc = rc });
+            shot.vel = dir * v + inherit; shot.inherit = inherit;
+            live.Add(shot);
             EnsureHost();
-            Main.Verbose($"BB away: muzzle {v:0} m/s, inherited {inherit.magnitude:0.0} m/s");
+            Main.Verbose($"{pr.Id} shot away: muzzle {v:0} m/s, inherited {inherit.magnitude:0.0} m/s");
         }
 
-        class Shot { public Vector3 pos, vel, inherit, start; public float age; public RifleController rc; }
+        class Shot { public Vector3 pos, vel, inherit, start; public float age, drag, mass, boost, maxDv, maxMass, radius; public RifleController rc; }
         static readonly List<Shot> live = new List<Shot>();
         static GameObject host;
 
@@ -114,27 +117,28 @@ namespace RailRider
                 {
                     float h = Mathf.Min(Step, left); left -= h;
                     Vector3 p0 = s.pos, v0 = s.vel;
-                    Vector3 acc = g - Main.S.dragK * v0.magnitude * v0;
+                    Vector3 acc = g - s.drag * v0.magnitude * v0;
                     s.pos = p0 + v0 * h + 0.5f * acc * h * h;
                     s.vel = v0 + acc * h;
                     s.age += h;
-                    if (Cast(s.rc, p0, s.pos, out var hit))
+                    if (Cast(s.rc, p0, s.pos, s.radius, out var hit))
                     {
-                        Impact(hit, v0 - s.inherit, (hit.point - s.start).magnitude, s.age);
+                        if (!ContactCallbacks.OfferImpact(hit.collider, hit.point, (s.pos - p0).normalized))
+                            Impact(hit, v0 - s.inherit, (hit.point - s.start).magnitude, s.age, s);
                         done = true;
                     }
-                    else if (s.age > MaxTime || (s.vel - s.inherit).magnitude < 4f) { Main.Verbose($"BB spent after {s.age:0.00}s without a hit"); done = true; }
+                    else if (s.age > MaxTime || (s.vel - s.inherit).magnitude < 4f) { Main.Verbose($"shot spent after {s.age:0.00}s without a hit"); done = true; }
                 }
                 if (done) live.RemoveAt(i);
             }
         }
 
-        static bool Cast(RifleController rc, Vector3 a, Vector3 b, out RaycastHit best)
+        static bool Cast(RifleController rc, Vector3 a, Vector3 b, float radius, out RaycastHit best)
         {
             best = default;
             Vector3 d = b - a; float len = d.magnitude;
             if (len < 1e-5f) return false;
-            int n = Physics.SphereCastNonAlloc(a, Radius, d / len, buf, len, Mask(), QueryTriggerInteraction.Ignore);
+            int n = Physics.SphereCastNonAlloc(a, radius, d / len, buf, len, Mask(), QueryTriggerInteraction.Ignore);
             float bestD = float.MaxValue; bool found = false;
             for (int i = 0; i < n; i++)
             {
@@ -171,7 +175,7 @@ namespace RailRider
             return RifleAudio.Kind.Tink;
         }
 
-        static void Impact(RaycastHit hit, Vector3 travel, float range, float age)
+        static void Impact(RaycastHit hit, Vector3 travel, float range, float age, Shot shot)
         {
             Vector3 dir = travel.normalized;
             var col = hit.collider;
@@ -201,12 +205,12 @@ namespace RailRider
                 if (TrainCar.Resolve(rb.gameObject) != null || rb.isKinematic) rb = null;
             }
 
-            if (rb == null || rb.mass > Main.S.maxTargetMass) { Main.Verbose($"hit (static/heavy) {what} layer={LayerMask.LayerToName(col.gameObject.layer)} range={range:0.0}m t={age:0.000}s rb={(rb == null ? "none" : rb.mass.ToString("0.00") + "kg kin=" + rb.isKinematic)} item={(itemBase != null)} path={Path(col.transform)}"); Fx.Impact(hit.point, hit.normal, ImpactSound(col)); return; }
+            if (rb == null || rb.mass > shot.maxMass) { Main.Verbose($"hit (static/heavy) {what} layer={LayerMask.LayerToName(col.gameObject.layer)} range={range:0.0}m t={age:0.000}s rb={(rb == null ? "none" : rb.mass.ToString("0.00") + "kg kin=" + rb.isKinematic)} item={(itemBase != null)} path={Path(col.transform)}"); Fx.Impact(hit.point, hit.normal, ImpactSound(col)); return; }
             Fx.Impact(hit.point, hit.normal, ImpactSound(col));
-            // Real BB momentum (mass * speed at impact, speed already reduced by drag) times the game boost,
+            // Real projectile momentum (mass * speed at impact, speed already reduced by drag) times the game boost,
             // capped so a very light prop is not launched. Heavier props get the same J, so move less.
             float speed = travel.magnitude;
-            float j = Mathf.Min(Main.S.bbMass * speed * Main.S.powerBoost, rb.mass * Main.S.maxDeltaV);
+            float j = Mathf.Min(shot.mass * speed * shot.boost, rb.mass * shot.maxDv);
             rb.AddForceAtPosition(dir * j, hit.point, ForceMode.Impulse);
             Main.Verbose($"hit {what} mass={rb.mass:0.00}kg range={range:0.0}m t={age:0.000}s bb={speed:0}m/s J={j:0.000}Ns dv~{j / rb.mass:0.00}m/s");
         }

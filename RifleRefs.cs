@@ -23,6 +23,7 @@ namespace RailRider
         public Vector3 cockLocalEuler = new Vector3(12f, -6f, 38f);
         public Vector3 leverAxis = Vector3.right;
         public float leverOpenDegrees = 70f;
+        public string profileId = RifleProfile.RailRiderId; // tuning + optional glTF mechanism clips (RifleProfile)
 
         public void ResolveByName()
         {

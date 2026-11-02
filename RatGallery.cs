@@ -22,6 +22,9 @@ namespace RailRider
         const float RatHalfW = 0.053f, RatY = 0.125f, RatHalfH = 0.024f;   // silhouette plus a few mm of forgiveness
         const float ResetContact = 0.2083f, ResetLength = 0.5417f;          // seconds, from the animation
 
+        // Playback speed of the knock-down, reset paddle and rise clips (and the timings that follow them).
+        static float Speed => Mathf.Clamp(Main.S.ratSpeed, 0.25f, 5f);
+
         readonly Dictionary<string, Transform> nodes = new Dictionary<string, Transform>();
         readonly Transform[] pivots = new Transform[Rats];
         readonly bool[] fallen = new bool[Rats];
@@ -71,7 +74,7 @@ namespace RailRider
             for (int i = active.Count - 1; i >= 0; i--)
             {
                 var a = active[i];
-                a.t += Time.deltaTime;
+                a.t += Time.deltaTime * Speed;
                 a.clip.Apply(nodes, a.t);
                 if (a.t >= a.clip.duration) active.RemoveAt(i);
             }
@@ -105,7 +108,7 @@ namespace RailRider
 
         void HitRat(int i)
         {
-            fallen[i] = true; busyUntil[i] = Time.time + 0.6f;
+            fallen[i] = true; busyUntil[i] = Time.time + 0.6f / Speed;
             Play("Rat_0" + (i + 1) + "_Down");
             RifleAudio.PlayAt(RifleAudio.Kind.RatFall, pivots[i].position, 1f);
             Main.Verbose("rat " + (i + 1) + " down");
@@ -115,7 +118,7 @@ namespace RailRider
         {
             Vector3 discPos = transform.TransformPoint(new Vector3(0f, DiscY, DiscPlaneZ));
             if (Time.time < resetUntil) return; // paddle still swinging: the disc just rings
-            resetUntil = Time.time + ResetLength;
+            resetUntil = Time.time + ResetLength / Speed;
             Play("Reset_Hit");
             RifleAudio.PlayAt(RifleAudio.Kind.RatReset, discPos, 1f);
             StartCoroutine(ResetRoutine(discPos));
@@ -126,20 +129,20 @@ namespace RailRider
 
         IEnumerator ResetRoutine(Vector3 discPos)
         {
-            yield return new WaitForSeconds(ResetContact);                    // the paddle meets the support rod
+            yield return new WaitForSeconds(ResetContact / Speed);                    // the paddle meets the support rod
             RifleAudio.PlayAt(RifleAudio.Kind.RatTick, discPos, 0.8f);
             int n = 0;
             for (int i = 0; i < Rats; i++)
             {
                 if (!fallen[i]) continue;
-                StartCoroutine(Rise(i, n++ * 0.018f));
+                StartCoroutine(Rise(i, n++ * 0.018f / Speed));
             }
         }
 
         IEnumerator Rise(int i, float delay)
         {
             if (delay > 0f) yield return new WaitForSeconds(delay);
-            fallen[i] = false; busyUntil[i] = Time.time + 0.6f;
+            fallen[i] = false; busyUntil[i] = Time.time + 0.6f / Speed;
             Play("Rat_0" + (i + 1) + "_Up");
             if (pivots[i] != null) RifleAudio.PlayAt(RifleAudio.Kind.RatRise, pivots[i].position, 0.9f);
         }

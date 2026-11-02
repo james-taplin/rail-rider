@@ -1,4 +1,4 @@
-# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.3.0 beta
+# Rail-Rider (Derail Valley plinking rifle + cab rack) 0.3.1 beta
 
 A Red Ryder-style lever-action BB rifle, a buyable cab rifle rack, six generic cans and a breakable green glass bottle.
 Needs Unity Mod Manager and Custom Item Mod 0.2.0 (`custom_item_mod`). Beta: tested in game by the author only; see `README_BETA.txt` for what is still unproven.
@@ -38,3 +38,7 @@ Scaled against DV's own General Store items, read from the game's scene data: Ha
 | Rail-Rider rat gallery | $900 | 3 | 0.18 |
 
 Cans and bottles are never sold (litter only); their listed prices ($5, $8) are unused.
+
+## Hunting framework handover
+See FRAMEWORK_HANDOFF.md. The callback-enabled 0.3 framework is the dependency for DV Hunting; D52 content and its authoring/source were moved to B:/GitHub repo/DV HUNTING/parts/d52-sidelever for later integration.
+

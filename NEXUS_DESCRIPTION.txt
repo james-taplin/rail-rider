@@ -36,25 +36,37 @@ All keys can be changed in the mod's panel (Ctrl+F10).
 [list=1]
 [*]Install Unity Mod Manager and Custom Item Mod if you don't have them.
 [*]Drag the Rail-Rider zip into Unity Mod Manager, or unzip the [i]RailRider[/i] folder into [i]<Derail Valley>\Mods[/i].
-[*]Start the game. The rifle and rack appear in the normal shops.
+[*]Start the game. The rifle, rack and rat gallery appear in the normal shops. The cans and bottle are litter near stations and are not sold.
 [/list]
-To uninstall, remove the RailRider folder from Mods. Loose cans and bottles are never saved, so nothing is left behind in your save. A rifle or rack you own is simply dropped from it.
+Updating: replace the RailRider folder with the new one (Unity Mod Manager does this for you). Your Settings.xml in that folder keeps your key bindings if you leave it in place.
+
+[b]Before you try it or remove it:[/b] back up your save. Loose cans and bottles are never written to a save, but the rifle, rack and rat gallery are real saved items. Before uninstalling, take racks off the wall, take rifles off racks, and drop or sell them. I haven't tested what the game does with them if the mod is removed while they are in a save.
 
 [size=4][b]Keeping your world tidy[/b][/size]
-The mod panel has a [b]Scatter[/b] toggle for the cans and bottles, and a [b]Clear all loose Rail-Rider items[/b] button. The button removes every loose rifle, rack, can and bottle in the world. Racks that are attached, rifles hanging on racks, items you're holding and anything in your inventory are left alone. Cans and bottles can also be thrown in a dumpster like any other junk.
+The mod panel has a [b]Scatter[/b] toggle for the cans and bottles, and a [b]Clear all loose Rail-Rider items[/b] button. The button removes every loose rifle, rack, rat gallery, can and bottle in the world, including ones you bought and left lying around. Racks that are attached, rifles hanging on racks, items you're holding and anything in your inventory are left alone. Cans and bottles can also be thrown in a dumpster like any other junk.
 
 [size=4][b]Beta notes[/b][/size]
 This is a beta, so please tell me what you find. Still to be proven outside my own test saves: rack placement, saving and loading a racked rifle, where the litter turns up, and how the sights sit at other resolutions and fields of view. If something goes wrong, tick "Verbose log" in the mod panel and send me your Player.log.
 
 [size=4][b]Credits[/b][/size]
-[list]
-[*]Code, game integration and testing: James, with Claude
-[*]Rifle model, textures and inventory art: Codex
-[*]Item framework: [b]Custom Item Mod[/b] by Tostiman
-[*]Unity Mod Manager and Harmony, for making this sort of thing possible
-[/list]
+Tostiman / Custom Item Mod, the item framework Rail-Rider is built on (required, not included);
+newman55 and contributors / Unity Mod Manager;
+Andreas Pardeike / Harmony, the patching library;
+James Newton-King / Newtonsoft.Json, used to read the glTF models (ships with the game);
+Altfuture / Derail Valley;
+
+AND:
+JimTaplin / james-taplin / design, direction, shop pricing, sound and feel feedback, and all in-game testing;
+Codex / rifle, rack and rat gallery models, textures, inventory icons, sound effects, and the Blender and audio build scripts;
+Claude / code, native item, snap and gadget integration, ballistics, glTF loader, scatter, packaging and diagnostics.
+Rail-Rider is an original design inspired by lever-action BB guns. It is not affiliated with or endorsed by Daisy or any other manufacturer. All names, logos and engraving on the models are made up for the mod.
+The source code is on GitHub: https://github.com/james-taplin/rail-rider
 
 [size=4][b]Changelog[/b][/size]
+[b]0.3.1[/b]
+[list]
+[*]rat gallery animations are faster: the rats drop, the reset disc swings and the rats pop back up about 1.8x quicker, adjustable in the mod panel
+[/list]
 [b]0.3.0[/b]
 [list]
 [*]new shop item: the rat gallery, four steel rats and a reset disc that you shoot to drop and reset

@@ -26,6 +26,7 @@ namespace RailRider
         public float cockPhaseTime = 0.30f; // seconds per lever stroke (down, then up)
         public float eyeRelief = 0.14f;     // m between camera and rear sight when raised
         public float aimZoom = 0.5f;        // Shift while aiming: this fraction of DV's own right-click zoom (0 = off)
+        public float ratSpeed = 1.8f;       // rat gallery: playback speed of the knock-down, reset disc and rise animations (1 = as modelled)
         public float aimNearClip = 0.03f;   // m, camera near plane while the rifle is raised/cocking so it does not clip
         public float shakeAccel = 22f;      // m/s^2 of rifle acceleration (game space) above which it rattles
         public float impactSpeed = 1.0f;    // m/s relative collision speed above which a loose rifle rattles
@@ -95,6 +96,7 @@ namespace RailRider
             S.zeroRange = Slider("Zero range (m)", S.zeroRange, 5f, 60f);
             S.aimZoom = Slider("Shift zoom while aiming (fraction of RMB zoom)", S.aimZoom, 0f, 1f);
             S.aimNearClip = Slider("Camera near clip while aiming (m)", S.aimNearClip, 0.005f, 0.1f);
+            S.ratSpeed = Slider("Rat gallery animation speed (x)", S.ratSpeed, 0.5f, 4f);
             S.motionRattle = GUILayout.Toggle(S.motionRattle, "Rattle when shaken / turned quickly");
             S.shakeAccel = Slider("Shake threshold (m/s^2)", S.shakeAccel, 5f, 80f);
             S.scatter = GUILayout.Toggle(S.scatter, "Scatter cans/bottles near stations (not saved; removed when you leave)");

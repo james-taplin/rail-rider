@@ -8,10 +8,13 @@ namespace RailRider
     /// <summary>
     /// Four replaceable sound events. Drop 16-bit PCM WAVs named after the Kind into the mod's Audio folder
     /// (Cock.wav, Equip.wav, PutDown.wav, Fire.wav) to override the TEMPORARY synthesised clips below.
+    /// A rifle whose profile has a SoundPrefix (e.g. "D52_") looks for prefix + Kind first (D52_Fire.wav or
+    /// D52_Fire_01.wav ...) and falls back to the shared clip; a prefixed Cock plays at fixed pitch because it is
+    /// timed to the cocking animation.
     /// </summary>
     public static class RifleAudio
     {
-        public enum Kind { Cock, Equip, PutDown, Fire, Shake, Impact, Dry, Tink, Thud, Glass, Can, Loco, Brick, Wood, RatFall, RatRise, RatReset, RatTick }
+        public enum Kind { Cock, Equip, PutDown, Fire, Shake, Impact, Dry, Tink, Thud, Glass, Can, Loco, Brick, Wood, RatFall, RatRise, RatReset, RatTick, Safety }
 
         static readonly Dictionary<Kind, AudioClip[]> clips = new Dictionary<Kind, AudioClip[]>();
         static readonly Dictionary<Kind, float> last = new Dictionary<Kind, float>();
@@ -35,11 +38,30 @@ namespace RailRider
             if (src == null)
             {
                 src = rc.gameObject.AddComponent<AudioSource>();
-                src.spatialBlend = 1f; src.minDistance = 1f; src.maxDistance = 20f; src.playOnAwake = false;
+                src.spatialBlend = 1f; src.minDistance = 1f; src.maxDistance = rc.AudioRange; src.playOnAwake = false;
             }
+            string prefix = rc.SoundPrefix;
+            var clip = string.IsNullOrEmpty(prefix) ? Clip(k) : PrefixedClip(rc.Profile.AudioDirectory, prefix, k);
+            bool timed = k == Kind.Cock && !string.IsNullOrEmpty(prefix);
             float basePitch = k == Kind.Equip ? 1.15f : k == Kind.PutDown ? 1.08f : k == Kind.Impact ? 1.1f : 1f;
-            src.pitch = basePitch * pitch * UnityEngine.Random.Range(0.95f, 1.05f);
-            src.PlayOneShot(Clip(k), (k == Kind.Fire ? 1.0f : k == Kind.Dry ? 0.5f : 0.8f) * Mathf.Clamp01(volume));
+            if (!string.IsNullOrEmpty(prefix)) basePitch = 1f; // prefixed sets are recorded at their own pitch
+            src.pitch = timed ? 1f : basePitch * pitch * UnityEngine.Random.Range(0.95f, 1.05f);
+            src.PlayOneShot(clip, (k == Kind.Fire ? 1.0f : k == Kind.Dry || k == Kind.Safety ? 0.5f : 0.8f) * Mathf.Clamp01(volume));
+        }
+
+        static readonly Dictionary<string, AudioClip[]> prefixed = new Dictionary<string, AudioClip[]>();
+
+        static AudioClip PrefixedClip(string directory, string prefix, Kind k)
+        {
+            string key = directory + "|" + prefix + k;
+            if (!prefixed.TryGetValue(key, out var pool))
+            {
+                var wav = LoadWav(k, prefix + k, directory);
+                pool = wav != null ? new[] { wav } : LoadTakes(k, prefix + k, directory);
+                prefixed[key] = pool;
+            }
+            if (pool.Length == 0) return Clip(k == Kind.Safety ? Kind.Dry : k);
+            return pool.Length == 1 ? pool[0] : pool[UnityEngine.Random.Range(0, pool.Length)];
         }
 
         /// <summary>True shortly after a handling/cock/fire sound, so motion rattles do not pile on top.</summary>
@@ -57,14 +79,14 @@ namespace RailRider
             if (!clips.TryGetValue(k, out var pool) || pool[0] == null)
             {
                 var wav = LoadWav(k, k.ToString());
-                pool = wav != null ? new[] { wav } : LoadTakes(k);
+                pool = wav != null ? new[] { wav } : LoadTakes(k, k.ToString());
                 if (pool.Length == 0)
                 {
                     if (k == Kind.Can || k == Kind.Loco || k == Kind.Brick) return Clip(Kind.Tink);
                     else if (k == Kind.Wood) return Clip(Kind.Thud);
                     else if (k == Kind.RatFall || k == Kind.RatRise || k == Kind.RatReset || k == Kind.RatTick) return Clip(Kind.Tink);
                     else if (k == Kind.Tink || k == Kind.Thud || k == Kind.Glass) { pool = new AudioClip[3]; for (int i = 0; i < 3; i++) pool[i] = Synth(k, i); }
-                    else if (k == Kind.Cock || k == Kind.Fire || k == Kind.Dry) pool = new[] { Synth(k, 0) };
+                    else if (k == Kind.Cock || k == Kind.Fire || k == Kind.Dry || k == Kind.Safety) pool = new[] { Synth(k == Kind.Safety ? Kind.Dry : k, 0) };
                     else
                     {
                         pool = new AudioClip[6];
@@ -85,24 +107,24 @@ namespace RailRider
             return pool[index];
         }
 
-        static AudioClip[] LoadTakes(Kind k)
+        static AudioClip[] LoadTakes(Kind k, string baseName, string directory = null)
         {
-            string directory = Path.Combine(Main.Mod.Path, "Audio");
+            directory = directory ?? Path.Combine(Main.Mod.Path, "Audio");
             if (!Directory.Exists(directory)) return Array.Empty<AudioClip>();
             var takes = new List<AudioClip>();
-            foreach (var file in Directory.GetFiles(directory, k + "_??.wav"))
+            foreach (var file in Directory.GetFiles(directory, baseName + "_??.wav"))
             {
-                var clip = LoadWav(k, Path.GetFileNameWithoutExtension(file));
+                var clip = LoadWav(k, Path.GetFileNameWithoutExtension(file), directory);
                 if (clip != null) takes.Add(clip);
             }
             return takes.ToArray();
         }
 
-        static AudioClip LoadWav(Kind k, string filename)
+        static AudioClip LoadWav(Kind k, string filename, string directory = null)
         {
             try
             {
-                string p = Path.Combine(Main.Mod.Path, "Audio", filename + ".wav");
+                string p = Path.Combine(directory ?? Path.Combine(Main.Mod.Path, "Audio"), filename + ".wav");
                 if (!File.Exists(p)) return null;
                 byte[] b = File.ReadAllBytes(p);
                 int ch = BitConverter.ToInt16(b, 22), rate = BitConverter.ToInt32(b, 24), bits = BitConverter.ToInt16(b, 34);

@@ -16,6 +16,8 @@ namespace RailRider
     ///   mechanism = Cocked + cock stroke.
     /// Interrupted cocking rule: any interruption (drop, stash, rack) aborts the stroke, the lever snaps
     /// shut and the rifle is left UNCOCKED. Only a finished down+up stroke cocks it.
+    /// Rifles whose profile registers glTF clips (Cock / SafetyOff / Fire) play those instead of the single
+    /// lever: Cock is one continuous stroke in real seconds (t = 0 rest, end = cocked with the safety on).
     /// </summary>
     [DefaultExecutionOrder(500)]
     public class RifleController : MonoBehaviour
@@ -27,6 +29,15 @@ namespace RailRider
         ItemSaveData save;
         Quaternion leverRest;
         bool wiredUp;
+        public RifleProfile Profile => RifleProfile.Get(refs.profileId);
+        public string SoundPrefix => Profile.SoundPrefix;
+        public float AudioRange => Profile.AudioRange;
+
+        // clip-driven mechanism (null for the single-lever Rail-Rider)
+        readonly System.Collections.Generic.Dictionary<string, Transform> nodes = new System.Collections.Generic.Dictionary<string, Transform>();
+        GltfClip cockClip, safetyClip, fireClip;
+        bool safetyOn;                       // automatic safety: set by a finished stroke, pushed off when raised
+        float safetyT = -1f, fireT = -1f;    // running one-shot clips (seconds), -1 = idle
 
         public bool Cocked { get; private set; }
         bool wantRaised;
@@ -46,12 +57,28 @@ namespace RailRider
             refs.ResolveByName();
             if (!refs.Valid) { Main.Warn("RifleRefs incomplete on " + name + "; controller disabled"); enabled = false; return; }
             leverRest = refs.lever.localRotation;
+            if (RifleProfile.Clips.TryGetValue(refs.profileId, out var clips) && clips != null)
+            {
+                foreach (var t in GetComponentsInChildren<Transform>(true)) nodes[t.name] = t;
+                foreach (var c in clips)
+                    if (c.name == "Cock") cockClip = c; else if (c.name == "SafetyOff") safetyClip = c; else if (c.name == "Fire") fireClip = c;
+            }
             save = GetComponent<ItemSaveData>();
             if (save != null) // only the real item has this; shelf/preview copies stay inert
             {
                 save.ItemSaveDataRequested += d => { d["rrCocked"] = Cocked; return d; };
-                save.ItemSaveDataLoaded += d => { Cocked = d["rrCocked"]?.Value<bool>() ?? false; };
+                save.ItemSaveDataLoaded += d => { Cocked = d["rrCocked"]?.Value<bool>() ?? false; RestPose(); };
             }
+            RestPose();
+        }
+
+        /// <summary>Mechanism pose that matches Cocked: closed and empty, or closed, loaded and on safe.</summary>
+        void RestPose()
+        {
+            if (cockClip == null) return;
+            safetyT = fireT = -1f;
+            safetyOn = Cocked;
+            cockClip.Apply(nodes, Cocked ? cockClip.duration : 0f);
         }
 
         // DV adds its ItemBase implementation from the Item spec; wait a few frames for it.
@@ -107,9 +134,18 @@ namespace RailRider
         void AbortAll()
         {
             wantRaised = false; aim01 = 0f; pendingCock = false; reraiseAfterCock = false;
-            if (cock != Cock.Idle) Main.Verbose("cocking aborted");
+            bool wasCocking = cock != Cock.Idle;
+            if (wasCocking) Main.Verbose("cocking aborted");
             cock = Cock.Idle; cockT = 0f;
-            if (refs != null && refs.lever != null) refs.lever.localRotation = leverRest;
+            if (cockClip != null) { if (wasCocking) cockClip.Apply(nodes, 0f); }
+            else if (refs != null && refs.lever != null) refs.lever.localRotation = leverRest;
+        }
+
+        // One-shot clips keep running whatever the handling state, so a dropped rifle still settles.
+        void TickOneShots()
+        {
+            if (safetyT >= 0f && safetyClip != null) { safetyT += Time.deltaTime; safetyClip.Apply(nodes, safetyT); if (safetyT >= safetyClip.duration) safetyT = -1f; }
+            if (fireT >= 0f && fireClip != null) { fireT += Time.deltaTime; fireClip.Apply(nodes, fireT); if (fireT >= fireClip.duration) fireT = -1f; }
         }
 
         // ---- input: key polling only; the firing click is DV's own held-item Use, already gated by DV ----
@@ -126,12 +162,16 @@ namespace RailRider
 
         void Update()
         {
+            TickOneShots();
             if (!Held) return;
             if (Input.GetMouseButtonDown(0) && IsRaisedOrRaising) TryFire("click-poll");
             if (InputAllowed())
             {
                 if (Input.GetKeyDown(Main.Key(Main.S.raiseLowerKey, KeyCode.Y)) && cock == Cock.Idle && !pendingCock)
+                {
                     wantRaised = !wantRaised;
+                    if (wantRaised) SafetyOffForAim();
+                }
                 if (Input.GetKeyDown(Main.Key(Main.S.cockKey, KeyCode.U)) && !Cocked && cock == Cock.Idle && !pendingCock)
                 {
                     if (aim01 > 0f || wantRaised) { reraiseAfterCock = true; wantRaised = false; pendingCock = true; } // simplest rule: cocking lowers the rifle first
@@ -150,9 +190,27 @@ namespace RailRider
             RifleAudio.Play(this, RifleAudio.Kind.Cock);
         }
 
+        // automatic safety: shouldering a cocked rifle pushes the safety slide forward
+        void SafetyOffForAim()
+        {
+            if (!Cocked || !safetyOn || safetyClip == null) return;
+            safetyOn = false; safetyT = 0f;
+            RifleAudio.Play(this, RifleAudio.Kind.Safety);
+        }
+
         void TickCock()
         {
             if (cock == Cock.Idle) return;
+            if (cockClip != null)
+            {
+                cockT += Time.deltaTime;                 // authored in real seconds
+                cockClip.Apply(nodes, cockT);
+                if (cockT < cockClip.duration) return;
+                cock = Cock.Idle; cockT = 0f; Cocked = true; safetyOn = true;
+                if (reraiseAfterCock) { reraiseAfterCock = false; wantRaised = true; SafetyOffForAim(); }
+                Main.Verbose("rifle cocked (clip)");
+                return;
+            }
             float phase = Mathf.Max(0.05f, Main.S.cockPhaseTime);
             cockT += Time.deltaTime / phase;
             float open = cock == Cock.Down ? Mathf.Clamp01(cockT) : 1f - Mathf.Clamp01(cockT);
@@ -241,16 +299,17 @@ namespace RailRider
                         Vector3 frontL = transform.InverseTransformPoint(refs.frontSight.position);
                         Vector3 sightDirL = (frontL - rearL).normalized;
                         Quaternion aimRot = cam.rotation * Quaternion.Inverse(Quaternion.LookRotation(sightDirL, Vector3.up));
-                        Vector3 aimPos = cam.position + cam.forward * Main.S.eyeRelief - aimRot * rearL;
+                        Vector3 aimPos = cam.position + cam.forward * Profile.EyeRelief - aimRot * rearL;
                         float t = Mathf.SmoothStep(0f, 1f, aim01);
                         pos = Vector3.Lerp(holdPos, aimPos, t); rot = Quaternion.Slerp(holdRot, aimRot, t);
                     }
                     if (recoil > 0f)
                     {
-                        recoil = Mathf.MoveTowards(recoil, 0f, Time.deltaTime / 0.22f);
+                        var pr = Profile;
+                        recoil = Mathf.MoveTowards(recoil, 0f, Time.deltaTime / pr.RecoilTime);
                         float k = recoil * recoil;
-                        pos -= rot * Vector3.forward * (0.07f * k) - rot * Vector3.up * (0.0f);
-                        rot = rot * Quaternion.Euler(-6f * k, 0f, 0f); // muzzle flips up
+                        pos -= rot * Vector3.forward * (pr.RecoilBack * k);
+                        rot = rot * Quaternion.Euler(-pr.RecoilFlip * k, 0f, pr.RecoilTwist * k); // muzzle flips up (springers also twist)
                     }
                     transform.SetPositionAndRotation(pos, rot);
                 }
@@ -277,7 +336,7 @@ namespace RailRider
             // Ignore our own animations, and absurd values (world-origin shifts / teleports).
             bool animating = cock != Cock.Idle || pendingCock || (aim01 > 0f && aim01 < 1f) || (cockShow > 0f && cockShow < 1f);
             if (animating || a > 600f) { calm = 0.35f; return; }
-            if (!Main.S.motionRattle || calm > 0f || RifleAudio.RecentlyHandled()) return;
+            if (!Main.S.motionRattle || !Profile.Rattles || calm > 0f || RifleAudio.RecentlyHandled()) return;
             if (a > Main.S.shakeAccel)
             {
                 float excess = a - Main.S.shakeAccel;
@@ -296,7 +355,7 @@ namespace RailRider
         }
 
         // ---- firing ----
-        bool CanFire => Held && wantRaised && aim01 >= 1f && cock == Cock.Idle && !pendingCock && Cocked && InputAllowed();
+        bool CanFire => Held && wantRaised && aim01 >= 1f && cock == Cock.Idle && !pendingCock && Cocked && !safetyOn && InputAllowed();
 
         // Two routes to the same TryFire: DV's held-item Use event, and a direct left-click poll as a fallback.
         // Cocked is consumed first inside TryFire, so both firing in one frame still gives one shot.
@@ -307,7 +366,11 @@ namespace RailRider
         {
             if (!CanFire)
             {
-                if (Held && wantRaised && aim01 >= 1f && cock == Cock.Idle && !pendingCock && !Cocked) RifleAudio.Play(this, RifleAudio.Kind.Dry);
+                if (Held && wantRaised && aim01 >= 1f && cock == Cock.Idle && !pendingCock && !Cocked)
+                {
+                    RifleAudio.Play(this, RifleAudio.Kind.Dry);
+                    if (fireClip != null && fireT < 0f) fireT = 0f; // the trigger still moves
+                }
                 if (IsRaisedOrRaising && Time.unscaledTime - lastRefusalLog > 0.5f)
                 {
                     lastRefusalLog = Time.unscaledTime;
@@ -317,8 +380,9 @@ namespace RailRider
             }
             Cocked = false;
             recoil = 1f;
+            if (fireClip != null) fireT = 0f;
             RifleAudio.Play(this, RifleAudio.Kind.Fire);
-            Ballistics.Fire(this, refs);
+            Ballistics.Fire(this, refs, Profile);
             Main.Log("shot fired via " + via);
         }
     }

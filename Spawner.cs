@@ -19,6 +19,7 @@ namespace RailRider
             if (!Main.S.debugSpawn) return;
             if (Input.GetKeyDown(KeyCode.F7)) { SpawnProps(); return; }
             if (!Input.GetKeyDown(Main.Key(Main.S.spawnKey, KeyCode.F8))) return;
+            if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) return; // reserved for content mods
             bool rack = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             bool gallery = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             var cam = PlayerManager.PlayerCamera;

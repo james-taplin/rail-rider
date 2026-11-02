@@ -12,7 +12,7 @@ namespace RailRider
     /// normals/UVs, factor + embedded-texture materials. Converted to Unity by mirroring X and reversing winding.
     /// Every node becomes a child named after the node, so gameplay finds Lever / RearSight / ... by name.
     /// </summary>
-    static class GltfLoader
+    public static class GltfLoader
     {
         static Material baseMat;
 

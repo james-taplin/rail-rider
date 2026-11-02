@@ -1,9 +1,12 @@
-Rail-Rider plinking rifle - 0.3.0 BETA (UMM)
+Rail-Rider plinking rifle - 0.3.1 BETA (UMM)
 
 A lever-action BB rifle for plinking, plus a cab rifle rack, six generic cans and a breakable green glass bottle.
 Beta: expect rough edges. Hand-built props and no hand model. Includes the adult rifle model and 40 firing, cocking, shake and impact sound clips.
 
-WHAT IS NEW IN 0.3.0
+WHAT IS NEW IN 0.3.1
+- Rat gallery: the rats drop, the reset disc swings and the rats pop back up noticeably faster (1.8x). Adjustable in the mod panel (Rat gallery animation speed).
+
+WHAT WAS NEW IN 0.3.0
 - New shop item: the Rail-Rider Rat Gallery. Four steel rats and a round reset disc in a steel housing. Shoot a rat and it drops and stays down; shoot the disc and every fallen rat stands back up. Sold in the shops alongside the rifle and rack. Ctrl+F8 (debug) puts one on the floor in front of you.
 
 WHAT WAS NEW IN 0.2.1
